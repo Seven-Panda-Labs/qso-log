@@ -46,7 +46,7 @@ It covers:
 | `npm run typecheck` | TypeScript |
 | `npm run lint` | Linter |
 | `npm run test` | Vitest unit tests |
-| `npm run test:rules` | Firestore rules against the emulator (needs Java) |
+| `npm run test:emulator` | Rules and the cloud log store, against the emulator (needs Java) |
 | `npm run check:changelog` | `package.json` version matches `change-log.md` |
 
 CI also runs [Gitleaks](https://github.com/gitleaks/gitleaks) on every PR, see [`.github/workflows/secret-scan.yml`](.github/workflows/secret-scan.yml).

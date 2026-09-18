@@ -20,8 +20,8 @@ export default defineConfig({
       VITE_FIREBASE_APP_ID: '',
       VITE_USE_FIREBASE_EMULATORS: '',
     },
-    // The rules tests need the Firestore emulator, so they run separately:
-    // `npm run test:rules`, config in vitest.config.rules.ts.
-    exclude: [...configDefaults.exclude, 'firestore.rules.test.ts'],
+    // Emulator backed tests run separately: `npm run test:emulator`, config
+    // in vitest.config.emulator.ts.
+    exclude: [...configDefaults.exclude, 'firestore.rules.test.ts', '**/*.emulator.test.ts'],
   },
 })

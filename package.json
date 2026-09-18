@@ -14,12 +14,12 @@
     "typecheck": "tsc -b",
     "lint": "oxlint",
     "test": "vitest run",
-    "check": "npm run typecheck && npm run lint && npm run test && npm run test:rules && npm run check:changelog",
+    "check": "npm run typecheck && npm run lint && npm run test && npm run test:emulator && npm run check:changelog",
     "check:changelog": "tsx scripts/verify-changelog.ts",
     "emulators": "firebase emulators:start --project demo-qso-log",
     "setup:githooks": "git config core.hooksPath .githooks",
     "deploy": "npm run build && firebase deploy --only hosting,firestore:rules,firestore:indexes",
-    "test:rules": "firebase emulators:exec --only firestore --project demo-qso-log \"vitest run --config vitest.config.rules.ts\""
+    "test:emulator": "firebase emulators:exec --only firestore --project demo-qso-log \"vitest run --config vitest.config.emulator.ts\""
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
@@ -41,6 +41,7 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.1.1",
+    "fake-indexeddb": "^6.2.5",
     "firebase-tools": "^15.30.2",
     "jsdom": "^30.1.0",
     "oxlint": "^1.83.0",

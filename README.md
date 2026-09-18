@@ -55,8 +55,8 @@ Details: [`docs/emulators.md`](docs/emulators.md), [`docs/configuration.md`](doc
 | `npm run emulators` | Firebase Emulator Suite (Auth, Firestore), UI on :4000 |
 | `npm run build` | Production build |
 | `npm run test` | Unit tests (Vitest) |
-| `npm run test:rules` | Firestore rules tests (needs Java) |
-| `npm run check` | Typecheck + lint + tests + rules + changelog, the same command CI runs |
+| `npm run test:emulator` | Tests that need the Firestore emulator: rules and the cloud log store (needs Java) |
+| `npm run check` | Typecheck + lint + tests + emulator tests + changelog, the same command CI runs |
 | `npm run setup:githooks` | Enable the git hooks: pre-commit + pre-push, once per clone |
 | `npm run deploy` | Build and deploy hosting, rules, and indexes (maintainers) |
 

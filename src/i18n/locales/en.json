@@ -22,7 +22,10 @@
     "empty": {
       "title": "No contacts logged yet",
       "body": "Your log is empty. Logging arrives in a later release."
-    }
+    },
+    "count_one": "{{count}} contact",
+    "count_other": "{{count}} contacts",
+    "storageUnavailable": "Storage is unavailable in this browser, so contacts cannot be saved. Private browsing often blocks it."
   },
   "notFound": {
     "title": "Page not found",
