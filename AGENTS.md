@@ -30,6 +30,22 @@ This is enforced, not just documented. See [Enforcement](#enforcement).
 
 This applies to the diff too: the smallest change that solves the problem, no speculative abstraction, no drive-by refactor.
 
+## Third golden rule: nothing instance-specific
+
+**The repo describes the project, never one deployment of it.** Anything that identifies a particular instance stays in local, gitignored config, and that includes what you write in commits and PR descriptions.
+
+| Instance-specific, keep out | Where it belongs |
+|-----------------------------|------------------|
+| Firebase project id, app id, API key, sender id, measurement id | `.env.local`, `.firebaserc` |
+| Hosting URLs, custom domains, console links | local config, or nowhere |
+| Anyone's account names, emails, or personal data | nowhere |
+
+In docs and examples, use placeholders: `<project-id>`, `https://<project-id>.web.app`, `your-project.firebaseapp.com`. A self-hoster's instance is as valid as the maintainers', and the repo should not imply otherwise.
+
+Not instance-specific, and fine to write: the repository URL, the project's contact addresses, and `demo-qso-log`, the emulator project id that exists only on a contributor's machine.
+
+If a deployment detail is needed to do the work, keep it in the local config and out of the diff. Never fix this by deleting history after the fact; keep it out in the first place.
+
 ## Mandatory git workflow
 
 1. Update local `main`:
@@ -80,6 +96,7 @@ This applies to the diff too: the smallest change that solves the problem, no sp
 - Put secrets, real personal data, or credentials in code, commits, or PRs
 - Large PRs mixing feature, refactor, and formatting
 - Padding: filler prose, obvious comments, essay length PR bodies
+- Instance-specific details in code, docs, commits, or PRs, see [the third golden rule](#third-golden-rule-nothing-instance-specific)
 - Em-dashes anywhere, or non-English text outside i18n locale files
 
 ## Writing: UI text, docs, and code comments
@@ -121,6 +138,11 @@ Local git hooks, enabled once per clone with `npm run setup:githooks` (or `git c
 | `.githooks/pre-commit` | A `package.json` version bump without a staged changelog |
 
 The pre-push hook covers every agent and human that shells out to `git`. Emergency hotfix, only on explicit user instruction: `ALLOW_MAIN_PUSH=1 git push origin main`.
+
+## Deploy and production
+
+- Deploy with `npm run deploy`, only when the user asks, and normally from `main` after a merge
+- The target comes from the local `.firebaserc` and `.env.local`, which are not in the repo. Do not name a project id or a hosting URL in the diff, the commit, or the PR
 
 ## Commits
 

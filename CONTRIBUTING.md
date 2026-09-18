@@ -74,6 +74,7 @@ PRs without a version bump (docs, tests, small refactors) do not need a changelo
 - **Comments explain why**, not what, and only where the code is not self-evident. A comment restating the line below it is noise.
 - **No em-dashes** in anything you write. Use a comma, a colon, or a full stop.
 - **No secrets**: never commit `.env.local`, `.firebaserc`, or service account JSON.
+- **Nothing instance-specific**: no Firebase project ids, app ids, hosting URLs, or console links in code, docs, commits, or PRs. They belong in local config. Use placeholders such as `<project-id>` in documentation.
 - **No real personal data**: log fixtures use fictional callsigns from the reserved blocks, for example `2E0XXX`, or documentation calls such as `W1AW` where a real one is unavoidable. No real operator names, addresses, or emails.
 
 ## Pull requests
