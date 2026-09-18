@@ -36,7 +36,22 @@ Firebase (Auth, Firestore, Hosting)
 | `src/styles/` | Tailwind entry and theme tokens |
 | `scripts/` | Repo tooling run with tsx |
 
-`src/domain/` arrives with the first real logic (ADIF, bands, callsigns) and holds pure functions only.
+`src/domain/` holds pure functions only: no React, no Firebase, no I/O.
+
+| Module | Covers |
+|--------|--------|
+| `band.ts` | The ADIF band table, frequency to band |
+| `mode.ts` | Modes, ADIF primary mode for a submode, which report style a mode uses |
+| `callsign.ts` | Callsign structure: base call, prefix, suffix, portable |
+| `grid.ts` | Maidenhead locators, distance and bearing |
+| `time.ts` | ADIF dates and times, all UTC |
+| `qso.ts` | The contact record, validation, duplicate detection |
+
+Three rules run through it:
+
+- **Nothing is rejected.** `validateQso` and `parseCallsign` report what looks wrong and leave the decision to the operator. An unusual callsign on an unusual frequency is still a real contact.
+- **Nothing derived overwrites what was logged.** The band follows from the frequency, never the reverse: a band midpoint is not where the QSO happened.
+- **One global band table, not per ITU region.** Regional allocations differ, but ADIF names a band by its widest range, and the log has to round trip through ADIF unchanged.
 
 ## Stack decisions
 
@@ -64,7 +79,9 @@ Dependencies point downward only. The domain layer never imports Firebase or Rea
 
 ## Data model
 
-*Open.* The QSO record follows ADIF field names where they exist, so import and export are close to a direct mapping. To be settled: collection layout per user, indexes needed for the table view filters, and how unknown ADIF fields are preserved.
+The QSO record is `Qso` in `src/domain/qso.ts`, with ADIF field names where they exist, so import and export stay close to a direct mapping. Unknown ADIF fields live in `extra`, because dropping them would make a round trip lossy.
+
+*Open:* the Firestore collection layout under each user, and the indexes the logbook table filters will need.
 
 ## Sync and offline
 
