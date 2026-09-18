@@ -1,0 +1,23 @@
+{
+  "app": {
+    "name": "QSO Log",
+    "tagline": "Un carnet de trafic simple pour les radioamateurs."
+  },
+  "language": {
+    "label": "Langue"
+  },
+  "status": {
+    "online": "En ligne",
+    "offline": "Hors ligne"
+  },
+  "logbook": {
+    "empty": {
+      "title": "Aucun contact enregistré",
+      "body": "Votre carnet est vide. L'enregistrement des QSO arrive dans une prochaine version."
+    }
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "back": "Retour au carnet de trafic"
+  }
+}

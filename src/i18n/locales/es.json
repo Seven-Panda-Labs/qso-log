@@ -1,0 +1,23 @@
+{
+  "app": {
+    "name": "QSO Log",
+    "tagline": "Un libro de guardia sencillo para radioaficionados."
+  },
+  "language": {
+    "label": "Idioma"
+  },
+  "status": {
+    "online": "En línea",
+    "offline": "Sin conexión"
+  },
+  "logbook": {
+    "empty": {
+      "title": "Aún no hay contactos registrados",
+      "body": "Tu libro está vacío. El registro de QSO llegará en una versión posterior."
+    }
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "back": "Volver al libro de guardia"
+  }
+}
