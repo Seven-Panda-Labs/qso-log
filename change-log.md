@@ -13,3 +13,4 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - Interface in English, Spanish, French, and Portuguese, following the browser language, with a language picker.
 - Domain rules for bands, modes, callsigns, grid squares, and UTC log times.
 - Google sign-in, with guest mode for logging without an account.
+- Log storage: on the device for guests, synced to the account once signed in.

@@ -22,7 +22,10 @@
     "empty": {
       "title": "Aún no hay contactos registrados",
       "body": "Tu libro está vacío. El registro de QSO llegará en una versión posterior."
-    }
+    },
+    "count_one": "{{count}} contacto",
+    "count_other": "{{count}} contactos",
+    "storageUnavailable": "El almacenamiento no está disponible en este navegador, así que no se pueden guardar contactos. La navegación privada suele bloquearlo."
   },
   "notFound": {
     "title": "Página no encontrada",

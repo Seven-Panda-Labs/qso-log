@@ -24,5 +24,8 @@
     "noUncheckedIndexedAccess": true,
     "resolveJsonModule": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  // Emulator tests read files from disk, so they need Node types. They are
+  // checked by tsconfig.node.json instead of pulling Node globals into the app.
+  "exclude": ["src/**/*.emulator.test.ts"]
 }

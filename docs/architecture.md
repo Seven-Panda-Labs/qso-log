@@ -32,6 +32,7 @@ Firebase (Auth, Firestore, Hosting)
 | `src/components/` | Shared UI |
 | `src/hooks/` | Reusable React state, for example `useOnlineStatus` |
 | `src/auth/` | Sign-in state, guest and signed-in |
+| `src/storage/` | The log store: local, cloud, and the migration between them |
 | `src/config/` | Firebase wiring, environment |
 | `src/i18n/` | i18next setup and locale files |
 | `src/styles/` | Tailwind entry and theme tokens |
@@ -94,11 +95,12 @@ QSO date and time are stored in **UTC**. Local time is a presentation concern, c
 
 ## Testing
 
-| Kind | Scope |
-|------|-------|
-| Unit | Domain functions, especially ADIF round trips and time conversion |
-| Component | Log entry form, logbook table filters |
-| Rules | Firestore security rules, one operator must never read another's log |
+| Kind | Command | Scope |
+|------|---------|-------|
+| Unit | `npm run test` | Domain functions, stores, hooks, components |
+| Emulator | `npm run test:emulator` | Security rules, and the cloud store against them |
+
+One operator must never read another's log. That is a rules test, not a store test: the store cannot enforce it and should not pretend to.
 
 ## Accounts and storage
 
@@ -113,7 +115,9 @@ Guest is a first class state, not a degraded one: an operator can log a full act
 
 Sign-in is Google, by popup. `AuthProvider` reports `unavailable` rather than failing when no Firebase project is configured, so the app still runs for a contributor who has not copied an env template, and for a self-hoster who wants a local-only build.
 
-*Open:* how a guest's local log moves into the cloud on first sign-in. It has to be lossless and it has to handle the operator who already has QSOs in both places.
+Both sides implement one `LogStore` interface, so nothing above it knows which log it is reading. Local is IndexedDB; cloud is a Firestore collection per operator, with the offline cache doing the syncing.
+
+`migrateLog` moves a guest's log into their account on first sign-in. It keeps contact ids, so it is idempotent; it writes and reads back every contact before clearing the local log, so a failed upload leaves the operator with everything; and it never overwrites a contact the account already has. The operator is asked first, since a migration that helps itself to the log on a borrowed device is exactly the failure to avoid.
 
 ## Open questions
 

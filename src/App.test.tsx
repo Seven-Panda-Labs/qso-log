@@ -15,9 +15,9 @@ function renderAt(path: string) {
 }
 
 describe('App', () => {
-  it('renders the logbook at the root', () => {
+  it('renders the logbook at the root', async () => {
     renderAt('/')
-    expect(screen.getByRole('heading', { name: 'No contacts logged yet' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'No contacts logged yet' })).toBeInTheDocument()
   })
 
   it('renders the not found page for an unknown route', () => {
@@ -32,9 +32,9 @@ describe('App', () => {
 
   // No Firebase config in the test environment, which is the state a
   // contributor is in before copying an env template. The app still runs.
-  it('runs without a Firebase project', () => {
+  it('runs without a Firebase project', async () => {
     renderAt('/')
-    expect(screen.getByRole('heading', { name: 'No contacts logged yet' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'No contacts logged yet' })).toBeInTheDocument()
     expect(screen.getByText('Sign-in unavailable')).toBeInTheDocument()
   })
 })

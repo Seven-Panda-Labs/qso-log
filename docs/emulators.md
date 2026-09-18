@@ -26,15 +26,17 @@ The app connects to the emulators when `VITE_USE_FIREBASE_EMULATORS=true`, which
 - **Test users** without Google sign-in: the Auth emulator accepts any email and password
 - **A clean slate**: emulator data lives in memory and is gone when you stop it
 
-## Rules tests
+## Emulator tests
 
-The security rules are tested against the same emulator:
+The security rules and the cloud log store are tested against the same emulator:
 
 ```bash
-npm run test:rules
+npm run test:emulator
 ```
 
-This starts Firestore, runs [`firestore.rules.test.ts`](../firestore.rules.test.ts), and shuts down. It is part of `npm run check`, which is why `check` needs Java.
+This starts Firestore, runs [`firestore.rules.test.ts`](../firestore.rules.test.ts) and every `*.emulator.test.ts` under `src/`, and shuts down. It is part of `npm run check`, which is why `check` needs Java.
+
+These files share one emulator and one dataset, so they run one at a time. In parallel they see each other's fixtures, and one file's `clearFirestore()` wipes another's data mid-test.
 
 ## Limitations
 

@@ -22,7 +22,10 @@
     "empty": {
       "title": "Ainda não há contactos registados",
       "body": "O teu diário está vazio. O registo de QSO chega numa versão posterior."
-    }
+    },
+    "count_one": "{{count}} contacto",
+    "count_other": "{{count}} contactos",
+    "storageUnavailable": "O armazenamento não está disponível neste navegador, por isso não é possível guardar contactos. A navegação privada costuma bloqueá-lo."
   },
   "notFound": {
     "title": "Página não encontrada",

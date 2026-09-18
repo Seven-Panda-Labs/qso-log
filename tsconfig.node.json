@@ -16,5 +16,5 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true
   },
-  "include": ["vite.config.ts", "vitest.config.ts", "vitest.config.rules.ts", "firestore.rules.test.ts", "scripts"]
+  "include": ["vite.config.ts", "vitest.config.ts", "vitest.config.emulator.ts", "firestore.rules.test.ts", "src/**/*.emulator.test.ts", "scripts"]
 }

@@ -22,7 +22,10 @@
     "empty": {
       "title": "Aucun contact enregistré",
       "body": "Votre carnet est vide. L'enregistrement des QSO arrive dans une prochaine version."
-    }
+    },
+    "count_one": "{{count}} contact",
+    "count_other": "{{count}} contacts",
+    "storageUnavailable": "Le stockage est indisponible dans ce navigateur, les contacts ne peuvent pas être enregistrés. La navigation privée le bloque souvent."
   },
   "notFound": {
     "title": "Page introuvable",
