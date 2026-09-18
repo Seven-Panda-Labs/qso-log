@@ -8,7 +8,7 @@ All documentation in this project is written in English, including the parts tha
 | [architecture.md](architecture.md) | How the app is put together: data model, sync, offline, modules | Partial |
 | [configuration.md](configuration.md) | Environment variables and infrastructure setup | Written |
 | [emulators.md](emulators.md) | Local development with the Firebase emulators | Written |
-| [self-hosting.md](self-hosting.md) | Running your own instance, step by step | Draft |
+| [self-hosting.md](self-hosting.md) | Running your own instance, step by step | Written |
 | [adif.md](adif.md) | ADIF import and export: supported fields and rules | Draft |
 | [i18n.md](i18n.md) | Locales, translation workflow, ham radio terminology | Written |
 

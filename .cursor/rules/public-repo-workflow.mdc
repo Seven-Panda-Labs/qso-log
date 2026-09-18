@@ -8,3 +8,5 @@ Follow [AGENTS.md](../../AGENTS.md), the single source of truth for agent instru
 **Never** `git push origin main` (or force-push `main`/`master`) unless the user explicitly requests an emergency hotfix. Commit, push, and deploy only when the user asks.
 
 **Keep it simple.** No slop: code, comments, commits, PRs, and docs are the minimum that does the job, and only if useful.
+
+**Nothing instance-specific.** No project ids, hosting URLs, or keys in code, docs, commits, or PRs: they live in local gitignored config.
