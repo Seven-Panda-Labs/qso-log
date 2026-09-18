@@ -3,6 +3,14 @@
     "name": "QSO Log",
     "tagline": "Um diário de estação simples para radioamadores."
   },
+  "auth": {
+    "signIn": "Entrar",
+    "signOut": "Sair",
+    "guest": "Convidado",
+    "unavailable": "Início de sessão indisponível",
+    "error": "Não foi possível entrar, tenta novamente",
+    "guestHint": "A registar localmente neste dispositivo. Entra para sincronizar entre dispositivos."
+  },
   "language": {
     "label": "Idioma"
   },

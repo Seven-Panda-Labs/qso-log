@@ -3,6 +3,14 @@
     "name": "QSO Log",
     "tagline": "A simple logbook for ham radio operators."
   },
+  "auth": {
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "guest": "Guest",
+    "unavailable": "Sign-in unavailable",
+    "error": "Sign-in failed, try again",
+    "guestHint": "Logging locally on this device. Sign in to sync across devices."
+  },
   "language": {
     "label": "Language"
   },

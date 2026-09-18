@@ -31,6 +31,7 @@ Firebase (Auth, Firestore, Hosting)
 | `src/pages/` | One component per route |
 | `src/components/` | Shared UI |
 | `src/hooks/` | Reusable React state, for example `useOnlineStatus` |
+| `src/auth/` | Sign-in state, guest and signed-in |
 | `src/config/` | Firebase wiring, environment |
 | `src/i18n/` | i18next setup and locale files |
 | `src/styles/` | Tailwind entry and theme tokens |
@@ -99,8 +100,21 @@ QSO date and time are stored in **UTC**. Local time is a presentation concern, c
 | Component | Log entry form, logbook table filters |
 | Rules | Firestore security rules, one operator must never read another's log |
 
+## Accounts and storage
+
+Two states, decided:
+
+| State | Where the log lives |
+|-------|---------------------|
+| **Guest** | Locally on the device only. No account, no cloud, nothing leaves the browser |
+| **Signed in** | Firestore under `users/{uid}`, synced across the operator's devices |
+
+Guest is a first class state, not a degraded one: an operator can log a full activation without ever creating an account. Signing in is how you get sync, not how you get to log.
+
+Sign-in is Google, by popup. `AuthProvider` reports `unavailable` rather than failing when no Firebase project is configured, so the app still runs for a contributor who has not copied an env template, and for a self-hoster who wants a local-only build.
+
+*Open:* how a guest's local log moves into the cloud on first sign-in. It has to be lossless and it has to handle the operator who already has QSOs in both places.
+
 ## Open questions
 
-- UI component library: Mantine or an alternative (see the product brief)
-- Authentication: which providers at launch, and whether a guest mode ships in the MVP
 - Whether any server side code is needed for the MVP, or client plus rules is enough

@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Outlet } from 'react-router-dom'
+import AccountButton from './AccountButton'
 import ConnectionStatus from './ConnectionStatus'
 import LanguageSwitcher from './LanguageSwitcher'
 
@@ -13,6 +14,7 @@ export default function AppLayout() {
         <div className="flex items-center gap-3">
           <ConnectionStatus />
           <LanguageSwitcher />
+          <AccountButton />
         </div>
       </header>
       <main className="flex-1 px-4 py-6">

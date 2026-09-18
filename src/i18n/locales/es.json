@@ -3,6 +3,14 @@
     "name": "QSO Log",
     "tagline": "Un libro de guardia sencillo para radioaficionados."
   },
+  "auth": {
+    "signIn": "Iniciar sesión",
+    "signOut": "Cerrar sesión",
+    "guest": "Invitado",
+    "unavailable": "Inicio de sesión no disponible",
+    "error": "No se pudo iniciar sesión, inténtalo de nuevo",
+    "guestHint": "Registrando localmente en este dispositivo. Inicia sesión para sincronizar entre dispositivos."
+  },
   "language": {
     "label": "Idioma"
   },
