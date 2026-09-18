@@ -31,7 +31,23 @@ function run<T>(request: IDBRequest<T>): Promise<T> {
   })
 }
 
+/**
+ * One database, one store object. Separate instances would each keep their own
+ * listeners, so a write through one would never reach a view subscribed to
+ * another, and the log would silently stop updating.
+ */
+const stores = new Map<string, LogStore>()
+
 export function createLocalLogStore(name = DB_NAME): LogStore {
+  const cached = stores.get(name)
+  if (cached) return cached
+
+  const store = buildLocalLogStore(name)
+  stores.set(name, store)
+  return store
+}
+
+function buildLocalLogStore(name: string): LogStore {
   const listeners = new Set<(qsos: Qso[]) => void>()
   let db: Promise<IDBDatabase> | undefined
 

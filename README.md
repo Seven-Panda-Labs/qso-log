@@ -7,13 +7,14 @@
 
 A simple, open source, cross platform logbook for ham radio operators. Works offline, syncs when online, runs on any device with a browser.
 
-> **Status: early development.** The app builds, runs, and has a test suite, but there is no logging yet: the current UI is an empty shell. See the [roadmap](docs/PRODUCT_BRIEF.md#-roadmap).
+> **Status: early development.** The MVP works: log contacts, search and sort them, import and export ADIF, and see basic statistics. Not yet polished, and not yet tested by many operators. See the [roadmap](docs/PRODUCT_BRIEF.md#-roadmap).
 
 ## Why
 
 Most logging software is Windows only, complex, or locked to a single vendor. QSO Log aims for the opposite: log a contact in seconds, on a phone in the field or a desktop at home, with your data in an open format you can export at any time.
 
 - **Simple by default**: log a QSO without reading a manual
+- **No account needed**: log as a guest on the device, sign in when you want sync
 - **Offline first**: full function with no connectivity, sync on reconnect
 - **Cross platform**: installable PWA on desktop, tablet, and phone
 - **Open data**: ADIF import and export, no lock-in

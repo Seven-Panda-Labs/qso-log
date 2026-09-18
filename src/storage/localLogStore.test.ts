@@ -95,14 +95,31 @@ describe('localLogStore', () => {
     expect(listener).toHaveBeenCalledTimes(3)
   })
 
-  it('survives a new store on the same database, which is a reload', async () => {
+  // Reading IndexedDB directly, so this proves the contact is on disk rather
+  // than in the store's memory.
+  it('writes the contact to the database', async () => {
     const name = `qso-log-test-${crypto.randomUUID()}`
-    const first = createLocalLogStore(name)
     const contact = qso()
-    await first.put(contact)
+    await createLocalLogStore(name).put(contact)
 
-    const second = createLocalLogStore(name)
-    expect(await second.list()).toEqual([contact])
+    const stored = await new Promise((resolve, reject) => {
+      const request = indexedDB.open(name)
+      request.onsuccess = () => {
+        const read = request.result.transaction('qsos').objectStore('qsos').getAll()
+        read.onsuccess = () => resolve(read.result)
+        read.onerror = () => reject(read.error)
+      }
+      request.onerror = () => reject(request.error)
+    })
+
+    expect(stored).toEqual([contact])
+  })
+
+  // One database is one store object: separate instances would each keep their
+  // own listeners, and a write through one would never reach the other.
+  it('returns the same store for the same database', () => {
+    const name = `qso-log-test-${crypto.randomUUID()}`
+    expect(createLocalLogStore(name)).toBe(createLocalLogStore(name))
   })
 
   it('clears the log', async () => {

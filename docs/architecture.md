@@ -48,6 +48,9 @@ Firebase (Auth, Firestore, Hosting)
 | `grid.ts` | Maidenhead locators, distance and bearing |
 | `time.ts` | ADIF dates and times, all UTC |
 | `qso.ts` | The contact record, validation, duplicate detection |
+| `adif.ts` | ADIF parsing and serialising, see [adif.md](adif.md) |
+| `logQuery.ts` | Search, filter, sort |
+| `stats.ts` | Counting a log |
 
 Three rules run through it:
 
@@ -83,7 +86,9 @@ Dependencies point downward only. The domain layer never imports Firebase or Rea
 
 The QSO record is `Qso` in `src/domain/qso.ts`, with ADIF field names where they exist, so import and export stay close to a direct mapping. Unknown ADIF fields live in `extra`, because dropping them would make a round trip lossy.
 
-*Open:* the Firestore collection layout under each user, and the indexes the logbook table filters will need.
+Contacts live under `users/{uid}/qsos/{id}` with the contact id as the document id, which is what makes the migration idempotent. Filtering and sorting happen in memory: a personal log is thousands of contacts, not millions, and an operator in the field is better served by a log that works offline than by server side queries that do not.
+
+*Open:* the point at which a log outgrows loading in full, and what paging looks like then.
 
 ## Sync and offline
 

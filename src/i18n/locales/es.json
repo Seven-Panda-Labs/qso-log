@@ -1,34 +1,111 @@
 {
+  "action": {
+    "add": "Añadir contacto",
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "save": "Guardar"
+  },
+  "adif": {
+    "export": "Exportar ADIF",
+    "import": "Importar ADIF",
+    "importFailed": "No se encontraron contactos en ese archivo",
+    "imported_one": "{{count}} contacto importado",
+    "imported_other": "{{count}} contactos importados"
+  },
   "app": {
     "name": "QSO Log",
     "tagline": "Un libro de guardia sencillo para radioaficionados."
   },
   "auth": {
+    "error": "No se pudo iniciar sesión, inténtalo de nuevo",
+    "guest": "Invitado",
+    "guestHint": "Registrando localmente en este dispositivo. Inicia sesión para sincronizar entre dispositivos.",
     "signIn": "Iniciar sesión",
     "signOut": "Cerrar sesión",
-    "guest": "Invitado",
-    "unavailable": "Inicio de sesión no disponible",
-    "error": "No se pudo iniciar sesión, inténtalo de nuevo",
-    "guestHint": "Registrando localmente en este dispositivo. Inicia sesión para sincronizar entre dispositivos."
+    "unavailable": "Inicio de sesión no disponible"
+  },
+  "field": {
+    "band": "Banda",
+    "call": "Indicativo",
+    "comment": "Notas",
+    "date": "Fecha (UTC)",
+    "freq": "Frecuencia (MHz)",
+    "gridsquare": "Localizador",
+    "mode": "Modo",
+    "rstRcvd": "Reporte recibido",
+    "rstSent": "Reporte enviado",
+    "time": "Hora (UTC)"
+  },
+  "form": {
+    "addTitle": "Añadir contacto",
+    "bandFromFreq": "Banda {{band}} según la frecuencia",
+    "editTitle": "Editar contacto",
+    "reportHintDb": "Reporte de señal en dB, por ejemplo -12",
+    "reportHintRst": "Reporte de señal, por ejemplo 59",
+    "saveAnyway": "Guardado tal como lo escribiste"
+  },
+  "issue": {
+    "band-frequency-mismatch": "Esta frecuencia está fuera de la banda",
+    "band-unknown": "Banda desconocida, se guardará tal como la escribiste",
+    "call-missing": "Falta el indicativo",
+    "call-unrecognised": "Indicativo poco habitual, se guardará tal como lo escribiste",
+    "date-invalid": "Esa fecha no existe",
+    "gridsquare-invalid": "Eso no es un localizador",
+    "mode-missing": "Falta el modo",
+    "time-invalid": "Esa hora no existe"
   },
   "language": {
     "label": "Idioma"
   },
-  "status": {
-    "online": "En línea",
-    "offline": "Sin conexión"
-  },
   "logbook": {
-    "empty": {
-      "title": "Aún no hay contactos registrados",
-      "body": "Tu libro está vacío. El registro de QSO llegará en una versión posterior."
-    },
+    "allBands": "Todas las bandas",
+    "allModes": "Todos los modos",
+    "clearFilters": "Limpiar filtros",
+    "confirmDelete": "¿Eliminar este contacto? No se puede deshacer.",
     "count_one": "{{count}} contacto",
     "count_other": "{{count}} contactos",
+    "empty": {
+      "body": "Tu libro está vacío. El registro de QSO llegará en una versión posterior.",
+      "title": "Aún no hay contactos registrados"
+    },
+    "noResults": "Ningún contacto coincide con la búsqueda",
+    "search": "Buscar",
+    "searchPlaceholder": "Indicativo, banda, modo, localizador, notas",
     "storageUnavailable": "El almacenamiento no está disponible en este navegador, así que no se pueden guardar contactos. La navegación privada suele bloquearlo."
   },
+  "migrate": {
+    "body_one": "Tienes {{count}} contacto registrado en este dispositivo. ¿Añadirlo a tu cuenta?",
+    "body_other": "Tienes {{count}} contactos registrados en este dispositivo. ¿Añadirlos a tu cuenta?",
+    "confirm": "Añadir a mi cuenta",
+    "dismiss": "Mantener en el dispositivo",
+    "done_one": "{{count}} contacto añadido a tu cuenta",
+    "done_other": "{{count}} contactos añadidos a tu cuenta",
+    "failed": "No se pudieron añadir, no se perdió nada",
+    "title": "Contactos en este dispositivo"
+  },
+  "nav": {
+    "logbook": "Registro",
+    "stats": "Estadísticas"
+  },
   "notFound": {
-    "title": "Página no encontrada",
-    "back": "Volver al libro de guardia"
+    "back": "Volver al libro de guardia",
+    "title": "Página no encontrada"
+  },
+  "stats": {
+    "activeDays": "Días en el aire",
+    "bands": "Bandas",
+    "empty": "Todavía no hay nada que contar",
+    "firstDate": "Primer contacto",
+    "lastDate": "Último contacto",
+    "modes": "Modos",
+    "stations": "Estaciones",
+    "title": "Estadísticas",
+    "total": "Contactos"
+  },
+  "status": {
+    "offline": "Sin conexión",
+    "online": "En línea"
   }
 }

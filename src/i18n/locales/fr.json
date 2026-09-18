@@ -1,34 +1,111 @@
 {
+  "action": {
+    "add": "Ajouter un contact",
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "save": "Enregistrer"
+  },
+  "adif": {
+    "export": "Exporter ADIF",
+    "import": "Importer ADIF",
+    "importFailed": "Aucun contact trouvé dans ce fichier",
+    "imported_one": "{{count}} contact importé",
+    "imported_other": "{{count}} contacts importés"
+  },
   "app": {
     "name": "QSO Log",
     "tagline": "Un carnet de trafic simple pour les radioamateurs."
   },
   "auth": {
+    "error": "Échec de la connexion, réessayez",
+    "guest": "Invité",
+    "guestHint": "Enregistrement local sur cet appareil. Connectez-vous pour synchroniser entre appareils.",
     "signIn": "Se connecter",
     "signOut": "Se déconnecter",
-    "guest": "Invité",
-    "unavailable": "Connexion indisponible",
-    "error": "Échec de la connexion, réessayez",
-    "guestHint": "Enregistrement local sur cet appareil. Connectez-vous pour synchroniser entre appareils."
+    "unavailable": "Connexion indisponible"
+  },
+  "field": {
+    "band": "Bande",
+    "call": "Indicatif",
+    "comment": "Notes",
+    "date": "Date (UTC)",
+    "freq": "Fréquence (MHz)",
+    "gridsquare": "Locator",
+    "mode": "Mode",
+    "rstRcvd": "Report reçu",
+    "rstSent": "Report envoyé",
+    "time": "Heure (UTC)"
+  },
+  "form": {
+    "addTitle": "Ajouter un contact",
+    "bandFromFreq": "Bande {{band}} d'après la fréquence",
+    "editTitle": "Modifier le contact",
+    "reportHintDb": "Report de signal en dB, par exemple -12",
+    "reportHintRst": "Report de signal, par exemple 59",
+    "saveAnyway": "Enregistré tel quel"
+  },
+  "issue": {
+    "band-frequency-mismatch": "Cette fréquence est hors de la bande",
+    "band-unknown": "Bande inconnue, elle sera enregistrée telle quelle",
+    "call-missing": "Un indicatif est nécessaire",
+    "call-unrecognised": "Indicatif inhabituel, il sera enregistré tel quel",
+    "date-invalid": "Cette date n'existe pas",
+    "gridsquare-invalid": "Ce n'est pas un locator",
+    "mode-missing": "Un mode est nécessaire",
+    "time-invalid": "Cette heure n'existe pas"
   },
   "language": {
     "label": "Langue"
   },
-  "status": {
-    "online": "En ligne",
-    "offline": "Hors ligne"
-  },
   "logbook": {
-    "empty": {
-      "title": "Aucun contact enregistré",
-      "body": "Votre carnet est vide. L'enregistrement des QSO arrive dans une prochaine version."
-    },
+    "allBands": "Toutes les bandes",
+    "allModes": "Tous les modes",
+    "clearFilters": "Effacer les filtres",
+    "confirmDelete": "Supprimer ce contact ? Cette action est irréversible.",
     "count_one": "{{count}} contact",
     "count_other": "{{count}} contacts",
+    "empty": {
+      "body": "Votre carnet est vide. L'enregistrement des QSO arrive dans une prochaine version.",
+      "title": "Aucun contact enregistré"
+    },
+    "noResults": "Aucun contact ne correspond à la recherche",
+    "search": "Rechercher",
+    "searchPlaceholder": "Indicatif, bande, mode, locator, notes",
     "storageUnavailable": "Le stockage est indisponible dans ce navigateur, les contacts ne peuvent pas être enregistrés. La navigation privée le bloque souvent."
   },
+  "migrate": {
+    "body_one": "Vous avez {{count}} contact enregistré sur cet appareil. L'ajouter à votre compte ?",
+    "body_other": "Vous avez {{count}} contacts enregistrés sur cet appareil. Les ajouter à votre compte ?",
+    "confirm": "Ajouter à mon compte",
+    "dismiss": "Garder sur l'appareil",
+    "done_one": "{{count}} contact ajouté à votre compte",
+    "done_other": "{{count}} contacts ajoutés à votre compte",
+    "failed": "Impossible de les ajouter, rien n'a été perdu",
+    "title": "Contacts sur cet appareil"
+  },
+  "nav": {
+    "logbook": "Carnet",
+    "stats": "Statistiques"
+  },
   "notFound": {
-    "title": "Page introuvable",
-    "back": "Retour au carnet de trafic"
+    "back": "Retour au carnet de trafic",
+    "title": "Page introuvable"
+  },
+  "stats": {
+    "activeDays": "Jours en ondes",
+    "bands": "Bandes",
+    "empty": "Rien à compter pour l'instant",
+    "firstDate": "Premier contact",
+    "lastDate": "Dernier contact",
+    "modes": "Modes",
+    "stations": "Stations",
+    "title": "Statistiques",
+    "total": "Contacts"
+  },
+  "status": {
+    "offline": "Hors ligne",
+    "online": "En ligne"
   }
 }

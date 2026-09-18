@@ -1,34 +1,111 @@
 {
+  "action": {
+    "add": "Add contact",
+    "cancel": "Cancel",
+    "close": "Close",
+    "delete": "Delete",
+    "edit": "Edit",
+    "save": "Save"
+  },
+  "adif": {
+    "export": "Export ADIF",
+    "import": "Import ADIF",
+    "importFailed": "No contacts found in that file",
+    "imported_one": "{{count}} contact imported",
+    "imported_other": "{{count}} contacts imported"
+  },
   "app": {
     "name": "QSO Log",
     "tagline": "A simple logbook for ham radio operators."
   },
   "auth": {
+    "error": "Sign-in failed, try again",
+    "guest": "Guest",
+    "guestHint": "Logging locally on this device. Sign in to sync across devices.",
     "signIn": "Sign in",
     "signOut": "Sign out",
-    "guest": "Guest",
-    "unavailable": "Sign-in unavailable",
-    "error": "Sign-in failed, try again",
-    "guestHint": "Logging locally on this device. Sign in to sync across devices."
+    "unavailable": "Sign-in unavailable"
+  },
+  "field": {
+    "band": "Band",
+    "call": "Callsign",
+    "comment": "Notes",
+    "date": "Date (UTC)",
+    "freq": "Frequency (MHz)",
+    "gridsquare": "Grid square",
+    "mode": "Mode",
+    "rstRcvd": "Report received",
+    "rstSent": "Report sent",
+    "time": "Time (UTC)"
+  },
+  "form": {
+    "addTitle": "Add contact",
+    "bandFromFreq": "Band {{band}} from the frequency",
+    "editTitle": "Edit contact",
+    "reportHintDb": "Signal report in dB, for example -12",
+    "reportHintRst": "Signal report, for example 59",
+    "saveAnyway": "Saved as typed"
+  },
+  "issue": {
+    "band-frequency-mismatch": "This frequency is outside the band",
+    "band-unknown": "Unknown band, it will be saved as you typed it",
+    "call-missing": "A callsign is needed",
+    "call-unrecognised": "Unusual callsign, it will be saved as you typed it",
+    "date-invalid": "That date does not exist",
+    "gridsquare-invalid": "That is not a grid square",
+    "mode-missing": "A mode is needed",
+    "time-invalid": "That time does not exist"
   },
   "language": {
     "label": "Language"
   },
-  "status": {
-    "online": "Online",
-    "offline": "Offline"
-  },
   "logbook": {
-    "empty": {
-      "title": "No contacts logged yet",
-      "body": "Your log is empty. Logging arrives in a later release."
-    },
+    "allBands": "All bands",
+    "allModes": "All modes",
+    "clearFilters": "Clear filters",
+    "confirmDelete": "Delete this contact? This cannot be undone.",
     "count_one": "{{count}} contact",
     "count_other": "{{count}} contacts",
+    "empty": {
+      "body": "Your log is empty. Logging arrives in a later release.",
+      "title": "No contacts logged yet"
+    },
+    "noResults": "No contacts match this search",
+    "search": "Search",
+    "searchPlaceholder": "Callsign, band, mode, grid, notes",
     "storageUnavailable": "Storage is unavailable in this browser, so contacts cannot be saved. Private browsing often blocks it."
   },
+  "migrate": {
+    "body_one": "You have {{count}} contact logged on this device. Add it to your account?",
+    "body_other": "You have {{count}} contacts logged on this device. Add them to your account?",
+    "confirm": "Add to my account",
+    "dismiss": "Keep on device",
+    "done_one": "{{count}} contact added to your account",
+    "done_other": "{{count}} contacts added to your account",
+    "failed": "Could not add them, nothing was lost",
+    "title": "Contacts on this device"
+  },
+  "nav": {
+    "logbook": "Log",
+    "stats": "Statistics"
+  },
   "notFound": {
-    "title": "Page not found",
-    "back": "Back to the logbook"
+    "back": "Back to the logbook",
+    "title": "Page not found"
+  },
+  "stats": {
+    "activeDays": "Days on air",
+    "bands": "Bands",
+    "empty": "Nothing to count yet",
+    "firstDate": "First contact",
+    "lastDate": "Latest contact",
+    "modes": "Modes",
+    "stations": "Stations",
+    "title": "Statistics",
+    "total": "Contacts"
+  },
+  "status": {
+    "offline": "Offline",
+    "online": "Online"
   }
 }

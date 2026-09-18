@@ -1,34 +1,111 @@
 {
+  "action": {
+    "add": "Adicionar contacto",
+    "cancel": "Cancelar",
+    "close": "Fechar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "save": "Guardar"
+  },
+  "adif": {
+    "export": "Exportar ADIF",
+    "import": "Importar ADIF",
+    "importFailed": "Não foram encontrados contactos nesse ficheiro",
+    "imported_one": "{{count}} contacto importado",
+    "imported_other": "{{count}} contactos importados"
+  },
   "app": {
     "name": "QSO Log",
     "tagline": "Um diário de estação simples para radioamadores."
   },
   "auth": {
+    "error": "Não foi possível entrar, tenta novamente",
+    "guest": "Convidado",
+    "guestHint": "A registar localmente neste dispositivo. Entra para sincronizar entre dispositivos.",
     "signIn": "Entrar",
     "signOut": "Sair",
-    "guest": "Convidado",
-    "unavailable": "Início de sessão indisponível",
-    "error": "Não foi possível entrar, tenta novamente",
-    "guestHint": "A registar localmente neste dispositivo. Entra para sincronizar entre dispositivos."
+    "unavailable": "Início de sessão indisponível"
+  },
+  "field": {
+    "band": "Banda",
+    "call": "Indicativo",
+    "comment": "Notas",
+    "date": "Data (UTC)",
+    "freq": "Frequência (MHz)",
+    "gridsquare": "Localizador",
+    "mode": "Modo",
+    "rstRcvd": "Relatório recebido",
+    "rstSent": "Relatório enviado",
+    "time": "Hora (UTC)"
+  },
+  "form": {
+    "addTitle": "Adicionar contacto",
+    "bandFromFreq": "Banda {{band}} a partir da frequência",
+    "editTitle": "Editar contacto",
+    "reportHintDb": "Relatório de sinal em dB, por exemplo -12",
+    "reportHintRst": "Relatório de sinal, por exemplo 59",
+    "saveAnyway": "Guardado tal como escreveste"
+  },
+  "issue": {
+    "band-frequency-mismatch": "Esta frequência está fora da banda",
+    "band-unknown": "Banda desconhecida, será guardada tal como escreveste",
+    "call-missing": "Falta o indicativo",
+    "call-unrecognised": "Indicativo pouco comum, será guardado tal como escreveste",
+    "date-invalid": "Essa data não existe",
+    "gridsquare-invalid": "Isso não é um localizador",
+    "mode-missing": "Falta o modo",
+    "time-invalid": "Essa hora não existe"
   },
   "language": {
     "label": "Idioma"
   },
-  "status": {
-    "online": "Online",
-    "offline": "Sem ligação"
-  },
   "logbook": {
-    "empty": {
-      "title": "Ainda não há contactos registados",
-      "body": "O teu diário está vazio. O registo de QSO chega numa versão posterior."
-    },
+    "allBands": "Todas as bandas",
+    "allModes": "Todos os modos",
+    "clearFilters": "Limpar filtros",
+    "confirmDelete": "Eliminar este contacto? Não é possível anular.",
     "count_one": "{{count}} contacto",
     "count_other": "{{count}} contactos",
+    "empty": {
+      "body": "O teu diário está vazio. O registo de QSO chega numa versão posterior.",
+      "title": "Ainda não há contactos registados"
+    },
+    "noResults": "Nenhum contacto corresponde à pesquisa",
+    "search": "Pesquisar",
+    "searchPlaceholder": "Indicativo, banda, modo, localizador, notas",
     "storageUnavailable": "O armazenamento não está disponível neste navegador, por isso não é possível guardar contactos. A navegação privada costuma bloqueá-lo."
   },
+  "migrate": {
+    "body_one": "Tens {{count}} contacto registado neste dispositivo. Adicionar à tua conta?",
+    "body_other": "Tens {{count}} contactos registados neste dispositivo. Adicionar à tua conta?",
+    "confirm": "Adicionar à minha conta",
+    "dismiss": "Manter no dispositivo",
+    "done_one": "{{count}} contacto adicionado à tua conta",
+    "done_other": "{{count}} contactos adicionados à tua conta",
+    "failed": "Não foi possível adicionar, nada se perdeu",
+    "title": "Contactos neste dispositivo"
+  },
+  "nav": {
+    "logbook": "Diário",
+    "stats": "Estatísticas"
+  },
   "notFound": {
-    "title": "Página não encontrada",
-    "back": "Voltar ao diário de estação"
+    "back": "Voltar ao diário de estação",
+    "title": "Página não encontrada"
+  },
+  "stats": {
+    "activeDays": "Dias no ar",
+    "bands": "Bandas",
+    "empty": "Ainda não há nada para contar",
+    "firstDate": "Primeiro contacto",
+    "lastDate": "Último contacto",
+    "modes": "Modos",
+    "stations": "Estações",
+    "title": "Estatísticas",
+    "total": "Contactos"
+  },
+  "status": {
+    "offline": "Sem ligação",
+    "online": "Online"
   }
 }

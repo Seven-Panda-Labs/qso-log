@@ -174,4 +174,4 @@ The branch must be green before merge.
 
 ## Project state
 
-The app is a working shell: routing, i18n, Tailwind, PWA, Firebase with emulators, and a green `npm run check`. The domain layer in `src/domain/` is real and tested. There is no storage and no logging UI yet. Layout of the code and the decisions behind it: [docs/architecture.md](docs/architecture.md).
+The MVP is in place: logging, search, sort, ADIF import and export, statistics, guest and signed-in storage. Polish, bundle size, and real operator feedback are what remain. Layout of the code and the decisions behind it: [docs/architecture.md](docs/architecture.md).

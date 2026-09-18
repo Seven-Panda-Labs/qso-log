@@ -33,31 +33,33 @@ export interface LogState {
   unavailable: boolean
 }
 
+interface LogSnapshot extends LogState {
+  store: LogStore | undefined
+}
+
+const EMPTY: LogState = { qsos: [], loading: true, unavailable: false }
+
 export function useLog(): LogState {
   const store = useLogStore()
-  const [qsos, setQsos] = useState<Qso[]>([])
-  const [loading, setLoading] = useState(true)
-  const [unavailable, setUnavailable] = useState(false)
+  const [snapshot, setSnapshot] = useState<LogSnapshot>({ store, ...EMPTY })
+
+  // Switching store, for example signing in, resets the log during render
+  // rather than in an effect, so no frame shows the previous operator's
+  // contacts under the new one.
+  if (snapshot.store !== store) setSnapshot({ store, ...EMPTY })
 
   useEffect(() => {
     if (!store) return
 
     let live = true
-    setLoading(true)
-    setUnavailable(false)
-
-    const unsubscribe = store.subscribe((next) => {
-      if (!live) return
-      setQsos(next)
-      setLoading(false)
+    const unsubscribe = store.subscribe((qsos) => {
+      if (live) setSnapshot({ store, qsos, loading: false, unavailable: false })
     })
 
     // A store that never answers would leave a blank screen forever, which is
     // what a private window with IndexedDB blocked does.
     void store.list().catch(() => {
-      if (!live) return
-      setLoading(false)
-      setUnavailable(true)
+      if (live) setSnapshot({ store, qsos: [], loading: false, unavailable: true })
     })
 
     return () => {
@@ -66,5 +68,5 @@ export function useLog(): LogState {
     }
   }, [store])
 
-  return { qsos, loading, unavailable }
+  return { qsos: snapshot.qsos, loading: snapshot.loading, unavailable: snapshot.unavailable }
 }
