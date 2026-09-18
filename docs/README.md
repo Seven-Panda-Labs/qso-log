@@ -5,8 +5,9 @@ All documentation in this project is written in English, including the parts tha
 | File | Contents | Status |
 |------|----------|--------|
 | [PRODUCT_BRIEF.md](PRODUCT_BRIEF.md) | Vision, audience, MVP scope, non-goals, roadmap | Written |
-| [architecture.md](architecture.md) | How the app is put together: data model, sync, offline, modules | Draft |
-| [configuration.md](configuration.md) | Environment variables and infrastructure setup | Draft |
+| [architecture.md](architecture.md) | How the app is put together: data model, sync, offline, modules | Partial |
+| [configuration.md](configuration.md) | Environment variables and infrastructure setup | Written |
+| [emulators.md](emulators.md) | Local development with the Firebase emulators | Written |
 | [self-hosting.md](self-hosting.md) | Running your own instance, step by step | Draft |
 | [adif.md](adif.md) | ADIF import and export: supported fields and rules | Draft |
 | [i18n.md](i18n.md) | Locales, translation workflow, ham radio terminology | Draft |

@@ -18,31 +18,27 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
-
-      # The application scaffold is not committed yet. Until package.json
-      # exists, the steps below are skipped instead of failing every PR.
-      - name: Detect app scaffold
-        id: scaffold
-        run: |
-          if [ -f package.json ]; then
-            echo "present=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "present=false" >> "$GITHUB_OUTPUT"
-            echo "No package.json yet, skipping build and tests."
-          fi
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
-        if: steps.scaffold.outputs.present == 'true'
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
 
+      # The Firestore emulator is a Java process, and `npm run check` runs the
+      # rules tests against it.
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+
       - name: Install dependencies
-        if: steps.scaffold.outputs.present == 'true'
         run: npm ci
 
       - name: Typecheck, lint, test, verify changelog
-        if: steps.scaffold.outputs.present == 'true'
         run: npm run check
+
+      - name: Build
+        run: npm run build

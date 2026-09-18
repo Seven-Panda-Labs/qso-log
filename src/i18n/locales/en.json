@@ -1,0 +1,20 @@
+{
+  "app": {
+    "name": "QSO Log",
+    "tagline": "A simple logbook for ham radio operators."
+  },
+  "status": {
+    "online": "Online",
+    "offline": "Offline"
+  },
+  "logbook": {
+    "empty": {
+      "title": "No contacts logged yet",
+      "body": "Your log is empty. Logging arrives in a later release."
+    }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "back": "Back to the logbook"
+  }
+}

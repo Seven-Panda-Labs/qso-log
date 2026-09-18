@@ -63,7 +63,7 @@ This applies to the diff too: the smallest change that solves the problem, no sp
 
 | Check | Command or note |
 |-------|-----------------|
-| Typecheck, lint, tests, changelog | `npm run check` |
+| Typecheck, lint, tests, rules, changelog | `npm run check` (needs Java for the emulator) |
 | No secrets | CI runs Gitleaks; never commit `.env.local`, `.firebaserc`, keys, service accounts |
 | No real personal data in fixtures | Fictional or documentation callsigns only, see [Test data](#test-data) |
 | Changelog (on version bump) | `change-log.md` + `package.json` |
@@ -136,6 +136,7 @@ The pre-push hook covers every agent and human that shells out to `git`. Emergen
 | Security and secrets | [SECURITY.md](SECURITY.md) |
 | Architecture | [docs/architecture.md](docs/architecture.md) |
 | Configuration and env vars | [docs/configuration.md](docs/configuration.md) |
+| Local emulators | [docs/emulators.md](docs/emulators.md) |
 | Self-hosting | [docs/self-hosting.md](docs/self-hosting.md) |
 | ADIF handling | [docs/adif.md](docs/adif.md) |
 | Internationalization | [docs/i18n.md](docs/i18n.md) |
@@ -145,10 +146,10 @@ The pre-push hook covers every agent and human that shells out to `git`. Emergen
 Every PR and push to `main` runs:
 
 - **CI**: `npm run check`
-- **Secret scan**: Gitleaks (organization repos need `GITLEAKS_LICENSE`)
+- **Secret scan**: Gitleaks over the full history
 
 The branch must be green before merge.
 
 ## Project state
 
-Early development. The application scaffold is not committed yet, so `npm run` commands above land with it. Until then, CI skips the build steps when there is no `package.json`. Keep this section updated as the scaffold arrives; remove it once every command in this file is real.
+The app is a working shell: routing, i18n, Tailwind, PWA, Firebase with emulators, and a green `npm run check`. There are no logging features yet. Layout of the code and the decisions behind it: [docs/architecture.md](docs/architecture.md).

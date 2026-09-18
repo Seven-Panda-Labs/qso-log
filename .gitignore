@@ -10,6 +10,7 @@ dev-dist/
 .env
 .env.*
 !.env.example
+!.env.*.example
 .firebaserc
 *-service-account*.json
 
