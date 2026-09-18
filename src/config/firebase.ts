@@ -58,13 +58,31 @@ export function createFirebase(env: FirebaseEnv, name?: string): FirebaseService
   return { app, db, auth }
 }
 
+/**
+ * Guest mode has to work with no Firebase project at all, so a missing or
+ * placeholder config is a normal state, not a crash: the app runs, and only
+ * sign-in is unavailable.
+ */
+export function isFirebaseConfigured(env: Partial<FirebaseEnv>): boolean {
+  return (
+    [
+      env.VITE_FIREBASE_API_KEY,
+      env.VITE_FIREBASE_AUTH_DOMAIN,
+      env.VITE_FIREBASE_PROJECT_ID,
+      env.VITE_FIREBASE_APP_ID,
+    ].every((value) => typeof value === 'string' && value.trim() !== '') &&
+    !env.VITE_FIREBASE_API_KEY?.startsWith('your-')
+  )
+}
+
 let services: FirebaseServices | undefined
 
 /**
  * Lazy on purpose: importing this module must not connect to anything, so
  * tests and any code path that never talks to Firebase stay free of it.
  */
-export function firebase(): FirebaseServices {
+export function firebase(): FirebaseServices | undefined {
+  if (!isFirebaseConfigured(import.meta.env as unknown as Partial<FirebaseEnv>)) return undefined
   services ??= createFirebase(import.meta.env as unknown as FirebaseEnv)
   return services
 }

@@ -3,6 +3,14 @@
     "name": "QSO Log",
     "tagline": "Un carnet de trafic simple pour les radioamateurs."
   },
+  "auth": {
+    "signIn": "Se connecter",
+    "signOut": "Se déconnecter",
+    "guest": "Invité",
+    "unavailable": "Connexion indisponible",
+    "error": "Échec de la connexion, réessayez",
+    "guestHint": "Enregistrement local sur cet appareil. Connectez-vous pour synchroniser entre appareils."
+  },
   "language": {
     "label": "Langue"
   },
