@@ -1,6 +1,6 @@
 # Architecture
 
-> **Draft.** The application scaffold is not committed yet. This file records decisions as they are made; open questions are marked *Open*.
+> **Partial.** The scaffold is committed; features are not. Settled decisions are recorded here, open ones are marked *Open*.
 
 ## Overview
 
@@ -23,6 +23,33 @@ Firebase (Auth, Firestore, Hosting)
 2. **Domain logic is pure.** ADIF parsing, band and mode validation, grid square math, and callsign parsing are pure functions with unit tests, independent of React and of Firebase.
 3. **The log is the user's data.** Full ADIF export is always available. Nothing in the format is lossy on round trip.
 4. **Small surface.** Features outside the product brief's MVP scope stay out until the core is solid.
+
+## Layout
+
+| Path | Holds |
+|------|-------|
+| `src/pages/` | One component per route |
+| `src/components/` | Shared UI |
+| `src/hooks/` | Reusable React state, for example `useOnlineStatus` |
+| `src/config/` | Firebase wiring, environment |
+| `src/i18n/` | i18next setup and locale files |
+| `src/styles/` | Tailwind entry and theme tokens |
+| `scripts/` | Repo tooling run with tsx |
+
+`src/domain/` arrives with the first real logic (ADIF, bands, callsigns) and holds pure functions only.
+
+## Stack decisions
+
+| Choice | Why |
+|--------|-----|
+| **Vite + React 19 + TypeScript** | Fast builds, the PWA plugin ecosystem, types on domain rules that are easy to get subtly wrong |
+| **Tailwind v4, no component library** | The log table and entry form are dense and custom; a component library's theme would be fought more than used. Also keeps the bundle small, which matters on a phone in the field |
+| **Firebase Auth + Firestore** | Offline persistence and sync out of the box, free tier covers a personal logbook, no server to operate |
+| **i18next** | Standard, framework agnostic, plural and interpolation support the UI needs |
+| **Vitest + Testing Library** | Shares the Vite config, so no second build pipeline |
+| **oxlint** | Fast enough to run on every commit without thinking about it |
+
+Firebase services are created by `createFirebase()` in `src/config/firebase.ts` and exposed lazily through `firebase()`. Importing the module connects to nothing, which keeps tests and non-Firebase code paths free of it.
 
 ## Layers
 

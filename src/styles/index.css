@@ -1,0 +1,17 @@
+@import 'tailwindcss';
+
+/* Dark by default: most operating happens at night or in bright sun where a
+   dark screen is easier to read. The light theme is a preference, not a base. */
+@theme {
+  --color-brand-50: oklch(0.97 0.02 250);
+  --color-brand-500: oklch(0.65 0.17 250);
+  --color-brand-600: oklch(0.56 0.17 250);
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-slate-900 text-slate-100 antialiased;
+}

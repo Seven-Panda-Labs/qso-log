@@ -2,7 +2,7 @@
 
 Thank you for your interest. This project is [AGPL-3.0](LICENSE) and follows the [Code of Conduct](CODE_OF_CONDUCT.md).
 
-The project is in early development: the foundations are in place, the application scaffold is not. Commands marked *(planned)* land with the scaffold.
+The project is in early development: the app is a working shell with no logging features yet.
 
 ## Before you start
 
@@ -11,16 +11,21 @@ The project is in early development: the foundations are in place, the applicati
 
 ## Local setup
 
-**Requirements:** Node.js 24 (Java 21+ for the Firebase emulators)
+**Requirements:** Node.js 24, Java 21+ (for the Firebase emulators)
+
+The emulators mean you need no Firebase project and no credentials to contribute:
 
 ```bash
 git clone https://github.com/Seven-Panda-Labs/qso-log.git
 cd qso-log
-npm install                    # (planned)
-cp .env.example .env.local     # (planned)
+npm install
+cp .env.emulator.example .env.local
 npm run setup:githooks         # once per clone
-npm run dev                    # (planned) http://localhost:5173
+npm run emulators              # terminal 1
+npm run dev                    # terminal 2, http://localhost:5173
 ```
+
+See [`docs/emulators.md`](docs/emulators.md). To work against your own Firebase project instead, copy `.env.example` and `.firebaserc.example` and fill them in.
 
 The git hooks are worth enabling: `pre-commit` blocks a `package.json` version bump without a changelog entry, `pre-push` blocks pushes to `main`.
 
@@ -31,7 +36,7 @@ Environment variables: [`docs/configuration.md`](docs/configuration.md).
 Before opening a PR, run the same command CI runs:
 
 ```bash
-npm run check    # (planned)
+npm run check
 ```
 
 It covers:
@@ -40,7 +45,8 @@ It covers:
 |---------|------|
 | `npm run typecheck` | TypeScript |
 | `npm run lint` | Linter |
-| `npm run test` | Vitest |
+| `npm run test` | Vitest unit tests |
+| `npm run test:rules` | Firestore rules against the emulator (needs Java) |
 | `npm run check:changelog` | `package.json` version matches `change-log.md` |
 
 CI also runs [Gitleaks](https://github.com/gitleaks/gitleaks) on every PR, see [`.github/workflows/secret-scan.yml`](.github/workflows/secret-scan.yml).
