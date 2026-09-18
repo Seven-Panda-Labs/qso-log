@@ -39,7 +39,7 @@ Security fixes land on `main`. Older releases may not receive backports.
 
 ## Secret detection
 
-**CI:** every PR and push to `main` runs [Gitleaks](https://github.com/gitleaks/gitleaks) via [`.github/workflows/secret-scan.yml`](.github/workflows/secret-scan.yml), configured in [`.gitleaks.toml`](.gitleaks.toml). Organization repositories need a free license from [gitleaks.io](https://gitleaks.io) in the `GITLEAKS_LICENSE` repository secret.
+**CI:** every PR and push to `main` runs [Gitleaks](https://github.com/gitleaks/gitleaks) over the full history via [`.github/workflows/secret-scan.yml`](.github/workflows/secret-scan.yml), configured in [`.gitleaks.toml`](.gitleaks.toml). The workflow runs the pinned gitleaks binary, not `gitleaks-action`, so no license key is needed. Keep the version in the workflow and `minVersion` in the config in sync.
 
 **GitHub native:** under **Settings → Code security and analysis**, enable **Secret scanning** and **Push protection**. Both are free on public repositories.
 

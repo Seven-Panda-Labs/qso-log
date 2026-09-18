@@ -145,7 +145,7 @@ The pre-push hook covers every agent and human that shells out to `git`. Emergen
 Every PR and push to `main` runs:
 
 - **CI**: `npm run check`
-- **Secret scan**: Gitleaks (organization repos need `GITLEAKS_LICENSE`)
+- **Secret scan**: Gitleaks over the full history
 
 The branch must be green before merge.
 

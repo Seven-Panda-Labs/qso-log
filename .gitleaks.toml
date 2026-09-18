@@ -1,9 +1,12 @@
 title = "qso-log gitleaks"
 
+# Bump when the pinned version in .github/workflows/secret-scan.yml changes.
+minVersion = "8.30.1"
+
 [extend]
 useDefault = true
 
-[allowlist]
+[[allowlists]]
 description = "Placeholder env templates and lockfiles"
 paths = [
   '''(?i)\.env\.example$''',
