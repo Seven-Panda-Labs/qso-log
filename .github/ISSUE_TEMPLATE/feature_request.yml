@@ -1,0 +1,47 @@
+name: Feature request
+description: Suggest an improvement or new capability
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check the [product brief](https://github.com/Seven-Panda-Labs/qso-log/blob/main/docs/PRODUCT_BRIEF.md) first: it lists explicit non-goals. For larger changes, discuss here before opening a PR.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What problem does this solve, and for which operators?
+      placeholder: As a POTA activator, I want …
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: How might this work in the app?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      placeholder: I also thought about …
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - label: I'm willing to open a PR for this
+          required: false
+        - label: This needs to work offline
+          required: false
+        - label: This affects ADIF import or export
+          required: false

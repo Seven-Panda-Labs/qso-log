@@ -1,0 +1,11 @@
+title = "qso-log gitleaks"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Placeholder env templates and lockfiles"
+paths = [
+  '''(?i)\.env\.example$''',
+  '''(?i)package-lock\.json$''',
+]

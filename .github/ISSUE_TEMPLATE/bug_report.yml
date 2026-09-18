@@ -1,0 +1,81 @@
+name: Bug report
+description: Something isn't working as expected
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. For **security issues**, see [SECURITY.md](https://github.com/Seven-Panda-Labs/qso-log/blob/main/SECURITY.md), not this form.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: A clear description of the bug.
+      placeholder: When I …
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+      placeholder: I expected …
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Go to …
+        2. Click …
+        3. See error
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: From the app settings, or the commit you are running.
+      placeholder: "0.1.0"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment
+      options:
+        - Hosted instance
+        - Self-hosted
+        - Local dev (`npm run dev`)
+        - Not sure
+    validations:
+      required: true
+
+  - type: dropdown
+    id: connectivity
+    attributes:
+      label: Were you online?
+      description: Offline behaviour and sync are common sources of bugs.
+      options:
+        - Online
+        - Offline
+        - Went offline and back online
+        - Not sure
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Extra context
+      description: Browser, OS, device, console errors, screenshots. If an ADIF file is involved, attach a minimal sample. No real personal data.
+      placeholder: Chrome 138, Android 15, ADIF export from Log4OM, …
+    validations:
+      required: false
