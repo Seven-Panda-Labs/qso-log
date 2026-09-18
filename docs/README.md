@@ -10,7 +10,7 @@ All documentation in this project is written in English, including the parts tha
 | [emulators.md](emulators.md) | Local development with the Firebase emulators | Written |
 | [self-hosting.md](self-hosting.md) | Running your own instance, step by step | Draft |
 | [adif.md](adif.md) | ADIF import and export: supported fields and rules | Draft |
-| [i18n.md](i18n.md) | Locales, translation workflow, ham radio terminology | Draft |
+| [i18n.md](i18n.md) | Locales, translation workflow, ham radio terminology | Written |
 
 Documents marked *Draft* record decisions as they are made. A draft that still contains open questions says so at the top.
 

@@ -73,7 +73,7 @@ Release history: [`change-log.md`](change-log.md).
 
 ## Language
 
-The application supports internationalization; the interface is translated. Everything else, code, comments, commits, issues, PRs, and documentation, is in **English**.
+The interface ships in English, Spanish, French, and Portuguese, and follows the browser language unless the operator picks one. Everything else, code, comments, commits, issues, PRs, and documentation, is in **English**. Adding a locale: [`docs/i18n.md`](docs/i18n.md).
 
 ## License
 

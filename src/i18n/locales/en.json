@@ -3,6 +3,9 @@
     "name": "QSO Log",
     "tagline": "A simple logbook for ham radio operators."
   },
+  "language": {
+    "label": "Language"
+  },
   "status": {
     "online": "Online",
     "offline": "Offline"

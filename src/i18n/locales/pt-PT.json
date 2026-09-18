@@ -1,0 +1,23 @@
+{
+  "app": {
+    "name": "QSO Log",
+    "tagline": "Um diário de estação simples para radioamadores."
+  },
+  "language": {
+    "label": "Idioma"
+  },
+  "status": {
+    "online": "Online",
+    "offline": "Sem ligação"
+  },
+  "logbook": {
+    "empty": {
+      "title": "Ainda não há contactos registados",
+      "body": "O teu diário está vazio. O registo de QSO chega numa versão posterior."
+    }
+  },
+  "notFound": {
+    "title": "Página não encontrada",
+    "back": "Voltar ao diário de estação"
+  }
+}
