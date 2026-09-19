@@ -27,7 +27,10 @@ export default defineConfig({
     { name: 'mobile', use: { ...devices['Pixel 7'] } },
   ],
   webServer: {
-    command: `npm run build && npm run preview -- --port ${PORT} --strictPort`,
+    // --host 127.0.0.1 explicitly: the runner resolves localhost to ::1 first,
+    // so a server left on the default host is never reachable at the address
+    // Playwright probes, and the wait times out after the build succeeded.
+    command: `npm run build && npm run preview -- --host 127.0.0.1 --port ${PORT} --strictPort`,
     url: `http://127.0.0.1:${PORT}`,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
