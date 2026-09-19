@@ -22,4 +22,4 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 
 ### Changed
 
-- Faster first load: the app no longer downloads the backend until you sign in.
+- Faster first load: the app no longer downloads the backend until you sign in, and never for a visitor who has not.

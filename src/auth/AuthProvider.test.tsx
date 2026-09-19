@@ -3,24 +3,34 @@ import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { AuthProvider, useAuth } from './AuthProvider'
 
-const { authMock, loadFirebase, signInWithPopup, signOut, onAuthStateChanged } = vi.hoisted(() => {
+const {
+  authMock,
+  loadFirebase,
+  isFirebaseConfigured,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged,
+} = vi.hoisted(() => {
   const auth = { name: 'auth' }
   return {
     authMock: auth,
     loadFirebase: vi.fn(async () => ({ auth, app: {}, db: {} })),
+    isFirebaseConfigured: vi.fn(() => true),
     signInWithPopup: vi.fn(),
     signOut: vi.fn(),
     onAuthStateChanged: vi.fn(),
   }
 })
 
-vi.mock('../config/firebase', () => ({ loadFirebase }))
+vi.mock('../config/firebase', () => ({ loadFirebase, isFirebaseConfigured }))
 vi.mock('firebase/auth', () => ({
   GoogleAuthProvider: class {},
   onAuthStateChanged,
   signInWithPopup,
   signOut,
 }))
+
+const SESSION_KEY = 'qso-log.signed-in'
 
 function Probe() {
   const { status, user, error, signIn, signOut: leave } = useAuth()
@@ -39,79 +49,85 @@ function Probe() {
   )
 }
 
-function renderProbe() {
-  return render(
+const renderProbe = () =>
+  render(
     <AuthProvider>
       <Probe />
     </AuthProvider>,
   )
+
+function signedInAs(displayName: string) {
+  onAuthStateChanged.mockImplementation((_auth: unknown, next: (user: unknown) => void) => {
+    next({ displayName })
+    return () => {}
+  })
 }
 
 beforeEach(() => {
   vi.clearAllMocks()
+  localStorage.clear()
+  isFirebaseConfigured.mockReturnValue(true)
   loadFirebase.mockResolvedValue({ auth: authMock, app: {}, db: {} })
-  onAuthStateChanged.mockImplementation(() => () => {})
+  // Firebase always reports, with null when there is no session.
+  onAuthStateChanged.mockImplementation((_auth: unknown, next: (user: unknown) => void) => {
+    next(null)
+    return () => {}
+  })
 })
 
 describe('AuthProvider', () => {
-  it('waits for Firebase before deciding', () => {
+  /**
+   * The point of the session flag: a visitor who has never signed in is a
+   * guest immediately, and the SDK is never fetched for them.
+   */
+  it('is a guest without loading Firebase when no session was ever created', async () => {
     renderProbe()
-    expect(screen.getByTestId('status')).toHaveTextContent('loading')
-  })
 
-  it('treats no session as a guest, not an error', async () => {
-    onAuthStateChanged.mockImplementation((_auth: unknown, next: (user: unknown) => void) => {
-      next(null)
-      return () => {}
-    })
-
-    renderProbe()
     await waitFor(() => expect(screen.getByTestId('status')).toHaveTextContent('guest'))
+    expect(loadFirebase).not.toHaveBeenCalled()
   })
 
-  it('reports a signed-in operator', async () => {
-    onAuthStateChanged.mockImplementation((_auth: unknown, next: (user: unknown) => void) => {
-      next({ displayName: 'Test Operator' })
-      return () => {}
-    })
+  it('restores a session on a device that has signed in before', async () => {
+    localStorage.setItem(SESSION_KEY, 'true')
+    signedInAs('Test Operator')
 
     renderProbe()
+
     await waitFor(() => expect(screen.getByTestId('status')).toHaveTextContent('signed-in'))
     expect(screen.getByTestId('user')).toHaveTextContent('Test Operator')
+    expect(loadFirebase).toHaveBeenCalled()
   })
 
-  // Guest mode has to work with no Firebase project at all, for a contributor
-  // with no config and for anyone running the app offline.
-  it('stays usable when Firebase is not configured', async () => {
-    loadFirebase.mockResolvedValue(undefined as never)
+  it('falls back to guest when the remembered session is gone', async () => {
+    localStorage.setItem(SESSION_KEY, 'true')
 
     renderProbe()
+
+    await waitFor(() => expect(screen.getByTestId('status')).toHaveTextContent('guest'))
+    expect(localStorage.getItem(SESSION_KEY)).toBeNull()
+  })
+
+  it('says sign-in is unavailable with no Firebase project', async () => {
+    isFirebaseConfigured.mockReturnValue(false)
+
+    renderProbe()
+
     await waitFor(() => expect(screen.getByTestId('status')).toHaveTextContent('unavailable'))
-    expect(onAuthStateChanged).not.toHaveBeenCalled()
-
-    await userEvent.click(screen.getByRole('button', { name: 'in' }))
-    await waitFor(() => expect(signInWithPopup).not.toHaveBeenCalled())
+    expect(loadFirebase).not.toHaveBeenCalled()
   })
 
-  it('signs in and out', async () => {
-    onAuthStateChanged.mockImplementation((_auth: unknown, next: (user: unknown) => void) => {
-      next(null)
-      return () => {}
-    })
-
+  it('loads Firebase when the operator asks to sign in, and remembers it', async () => {
     renderProbe()
-    await userEvent.click(screen.getByRole('button', { name: 'in' }))
-    await waitFor(() => expect(signInWithPopup).toHaveBeenCalledOnce())
+    await waitFor(() => expect(screen.getByTestId('status')).toHaveTextContent('guest'))
 
-    await userEvent.click(screen.getByRole('button', { name: 'out' }))
-    await waitFor(() => expect(signOut).toHaveBeenCalledOnce())
+    signedInAs('Test Operator')
+    await userEvent.click(screen.getByRole('button', { name: 'in' }))
+
+    await waitFor(() => expect(signInWithPopup).toHaveBeenCalledOnce())
+    await waitFor(() => expect(localStorage.getItem(SESSION_KEY)).toBe('true'))
   })
 
   it('reports a failed sign-in and stays a guest', async () => {
-    onAuthStateChanged.mockImplementation((_auth: unknown, next: (user: unknown) => void) => {
-      next(null)
-      return () => {}
-    })
     signInWithPopup.mockRejectedValue(new Error('popup closed'))
 
     renderProbe()
@@ -121,7 +137,21 @@ describe('AuthProvider', () => {
     expect(screen.getByTestId('status')).toHaveTextContent('guest')
   })
 
+  it('signs out and forgets the session', async () => {
+    localStorage.setItem(SESSION_KEY, 'true')
+    signedInAs('Test Operator')
+
+    renderProbe()
+    await waitFor(() => expect(screen.getByTestId('status')).toHaveTextContent('signed-in'))
+
+    await userEvent.click(screen.getByRole('button', { name: 'out' }))
+
+    await waitFor(() => expect(signOut).toHaveBeenCalledOnce())
+    expect(localStorage.getItem(SESSION_KEY)).toBeNull()
+  })
+
   it('unsubscribes on unmount', async () => {
+    localStorage.setItem(SESSION_KEY, 'true')
     const unsubscribe = vi.fn()
     onAuthStateChanged.mockImplementation(() => unsubscribe)
 
@@ -136,6 +166,7 @@ describe('AuthProvider', () => {
   // is still in flight. Subscribing after that would leak a listener nothing
   // can unsubscribe.
   it('does not subscribe when unmounted before the SDK arrives', async () => {
+    localStorage.setItem(SESSION_KEY, 'true')
     type Services = Awaited<ReturnType<typeof loadFirebase>>
     let resolve: ((services: Services) => void) | undefined
     loadFirebase.mockReturnValue(

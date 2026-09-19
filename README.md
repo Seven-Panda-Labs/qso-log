@@ -57,6 +57,7 @@ Details: [`docs/emulators.md`](docs/emulators.md), [`docs/configuration.md`](doc
 | `npm run build` | Production build |
 | `npm run test` | Unit tests (Vitest) |
 | `npm run test:emulator` | Tests that need the Firestore emulator: rules and the cloud log store (needs Java) |
+| `npm run test:e2e` | End to end tests in a real browser (Playwright) |
 | `npm run check` | Typecheck + lint + tests + emulator tests + changelog, the same command CI runs |
 | `npm run setup:githooks` | Enable the git hooks: pre-commit + pre-push, once per clone |
 | `npm run deploy` | Build and deploy hosting, rules, and indexes (maintainers) |

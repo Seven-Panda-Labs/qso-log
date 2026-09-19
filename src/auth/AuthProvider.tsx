@@ -1,6 +1,32 @@
 import type { User } from 'firebase/auth'
 import { createContext, type ReactNode, use, useCallback, useEffect, useMemo, useState } from 'react'
-import { loadFirebase } from '../config/firebase'
+import { isFirebaseConfigured, loadFirebase, type FirebaseEnv } from '../config/firebase'
+
+/**
+ * Remembers that this device has signed in before, so a first time visitor
+ * never downloads the SDK at all. Without it, checking whether anyone is
+ * signed in means loading Firebase on every visit, including for the guest who
+ * never will.
+ */
+const SESSION_KEY = 'qso-log.signed-in'
+
+function hasSignedInBefore(): boolean {
+  try {
+    return localStorage.getItem(SESSION_KEY) === 'true'
+  } catch {
+    // Private windows can throw. Assume not, and load on demand.
+    return false
+  }
+}
+
+function rememberSession(signedIn: boolean) {
+  try {
+    if (signedIn) localStorage.setItem(SESSION_KEY, 'true')
+    else localStorage.removeItem(SESSION_KEY)
+  } catch {
+    // Ignored, as above.
+  }
+}
 
 export type AuthStatus =
   /** Waiting for Firebase to report whether a session exists. */
@@ -26,9 +52,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [status, setStatus] = useState<AuthStatus>('loading')
   const [error, setError] = useState<'sign-in-failed' | null>(null)
 
-  // Firebase and its auth module are imported here rather than at the top of
-  // the file, so a guest never downloads the SDK.
+  const [watching, setWatching] = useState(hasSignedInBefore)
+
+  // Firebase is imported here rather than at the top of the file, and only
+  // when there is a session to restore or the operator asks to sign in.
   useEffect(() => {
+    if (!isFirebaseConfigured(import.meta.env as unknown as Partial<FirebaseEnv>)) {
+      setStatus('unavailable')
+      return
+    }
+
+    if (!watching) {
+      setStatus('guest')
+      return
+    }
+
     let live = true
     let unsubscribe: (() => void) | undefined
 
@@ -46,6 +84,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       unsubscribe = onAuthStateChanged(services.auth, (next) => {
         setUser(next)
         setStatus(next ? 'signed-in' : 'guest')
+        rememberSession(next !== null)
       })
     })()
 
@@ -53,13 +92,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       live = false
       unsubscribe?.()
     }
-  }, [])
+  }, [watching])
 
   const signIn = useCallback(async () => {
     const services = await loadFirebase()
     if (!services) return
 
     setError(null)
+    // From here on this device has a session to restore, so later visits watch
+    // for it from the start.
+    setWatching(true)
     try {
       const { GoogleAuthProvider, signInWithPopup } = await import('firebase/auth')
       await signInWithPopup(services.auth, new GoogleAuthProvider())
@@ -75,6 +117,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!services) return
     const { signOut } = await import('firebase/auth')
     await signOut(services.auth)
+    rememberSession(false)
   }, [])
 
   const value = useMemo<AuthState>(

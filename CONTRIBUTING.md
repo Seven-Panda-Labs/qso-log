@@ -49,6 +49,15 @@ It covers:
 | `npm run test:emulator` | Rules and the cloud log store, against the emulator (needs Java) |
 | `npm run check:changelog` | `package.json` version matches `change-log.md` |
 
+End to end tests run separately, in a real browser:
+
+```bash
+npx playwright install chromium   # once
+npm run test:e2e                  # or npm run test:e2e:ui to watch them
+```
+
+They build the app and drive it as an operator would. `npm run check` leaves them out so it stays quick; CI runs both. See [`docs/testing.md`](docs/testing.md).
+
 CI also runs [Gitleaks](https://github.com/gitleaks/gitleaks) on every PR, see [`.github/workflows/secret-scan.yml`](.github/workflows/secret-scan.yml).
 
 ## Changelog
