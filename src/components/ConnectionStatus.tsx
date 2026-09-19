@@ -8,7 +8,7 @@ export default function ConnectionStatus() {
   return (
     <span
       className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-        online ? 'bg-slate-800 text-slate-300' : 'bg-amber-900/50 text-amber-200'
+        online ? 'bg-panel text-fg-soft' : 'bg-warn-surface text-warn'
       }`}
     >
       {online ? t('status.online') : t('status.offline')}

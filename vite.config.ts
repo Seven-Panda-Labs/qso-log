@@ -4,6 +4,18 @@ import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  build: {
+    rollupOptions: {
+      output: {
+        // Named, so the service worker can tell the Firebase SDK apart from
+        // the app and treat it differently.
+        manualChunks: (id) =>
+          id.includes('node_modules/firebase') || id.includes('node_modules/@firebase')
+            ? 'firebase'
+            : undefined,
+      },
+    },
+  },
   plugins: [
     react(),
     tailwindcss(),
@@ -28,7 +40,19 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        // The SDK is most of the download and only a signed-in operator needs
+        // it. Precaching it would charge every guest, on mobile data in a
+        // field, for a feature they may never open. It is cached the first
+        // time it is fetched instead, so offline still works after sign-in.
+        globIgnores: ['**/firebase-*.js'],
         navigateFallback: '/index.html',
+        runtimeCaching: [
+          {
+            urlPattern: /\/assets\/firebase-.*\.js$/,
+            handler: 'CacheFirst',
+            options: { cacheName: 'firebase-sdk', expiration: { maxEntries: 8 } },
+          },
+        ],
       },
     }),
   ],

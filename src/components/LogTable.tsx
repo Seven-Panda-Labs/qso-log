@@ -38,8 +38,8 @@ export default function LogTable({
 
   return (
     <table className="w-full text-left text-sm">
-      <thead className="text-slate-400">
-        <tr className="border-b border-slate-800">
+      <thead className="text-muted">
+        <tr className="border-b border-line">
           {COLUMNS.map((column) => (
             <th key={column.key} scope="col" className={`py-2 pr-3 font-medium ${column.className ?? ''}`}>
               {column.field ? (
@@ -62,7 +62,7 @@ export default function LogTable({
       </thead>
       <tbody>
         {qsos.map((qso) => (
-          <tr key={qso.id} className="border-b border-slate-800/60">
+          <tr key={qso.id} className="border-b border-line-soft">
             <td className="py-2 pr-3 font-medium tracking-wide">{qso.call}</td>
             <td className="py-2 pr-3 tabular-nums">{formatDate(qso.qsoDate)}</td>
             <td className="hidden py-2 pr-3 tabular-nums sm:table-cell">{formatTime(qso.timeOn)}</td>

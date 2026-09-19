@@ -8,13 +8,13 @@ export default function AccountButton() {
   if (status === 'loading') return null
 
   if (status === 'unavailable') {
-    return <span className="text-xs text-slate-500">{t('auth.unavailable')}</span>
+    return <span className="text-xs text-muted">{t('auth.unavailable')}</span>
   }
 
   if (status === 'signed-in') {
     return (
       <div className="flex items-center gap-2">
-        <span className="max-w-32 truncate text-sm text-slate-300">
+        <span className="max-w-32 truncate text-sm text-fg-soft">
           {user?.displayName ?? user?.email}
         </span>
         <button type="button" onClick={() => void signOut()} className="text-sm underline">
@@ -26,11 +26,11 @@ export default function AccountButton() {
 
   return (
     <div className="flex items-center gap-2">
-      {error ? <span className="text-xs text-amber-300">{t('auth.error')}</span> : null}
+      {error ? <span className="text-xs text-warn">{t('auth.error')}</span> : null}
       <button
         type="button"
         onClick={() => void signIn()}
-        className="rounded-md bg-brand-600 px-3 py-1 text-sm font-medium"
+        className="rounded-md bg-brand-600 text-on-brand px-3 py-1 text-sm font-medium"
       >
         {t('auth.signIn')}
       </button>

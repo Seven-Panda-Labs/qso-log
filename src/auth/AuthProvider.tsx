@@ -1,6 +1,6 @@
-import { GoogleAuthProvider, type User, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth'
+import type { User } from 'firebase/auth'
 import { createContext, type ReactNode, use, useCallback, useEffect, useMemo, useState } from 'react'
-import { firebase } from '../config/firebase'
+import { loadFirebase } from '../config/firebase'
 
 export type AuthStatus =
   /** Waiting for Firebase to report whether a session exists. */
@@ -22,35 +22,60 @@ export interface AuthState {
 const AuthContext = createContext<AuthState | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const services = useMemo(() => firebase(), [])
   const [user, setUser] = useState<User | null>(null)
-  const [status, setStatus] = useState<AuthStatus>(services ? 'loading' : 'unavailable')
+  const [status, setStatus] = useState<AuthStatus>('loading')
   const [error, setError] = useState<'sign-in-failed' | null>(null)
 
+  // Firebase and its auth module are imported here rather than at the top of
+  // the file, so a guest never downloads the SDK.
   useEffect(() => {
-    if (!services) return
-    return onAuthStateChanged(services.auth, (next) => {
-      setUser(next)
-      setStatus(next ? 'signed-in' : 'guest')
-    })
-  }, [services])
+    let live = true
+    let unsubscribe: (() => void) | undefined
+
+    void (async () => {
+      const services = await loadFirebase()
+      if (!live) return
+      if (!services) {
+        setStatus('unavailable')
+        return
+      }
+
+      const { onAuthStateChanged } = await import('firebase/auth')
+      if (!live) return
+
+      unsubscribe = onAuthStateChanged(services.auth, (next) => {
+        setUser(next)
+        setStatus(next ? 'signed-in' : 'guest')
+      })
+    })()
+
+    return () => {
+      live = false
+      unsubscribe?.()
+    }
+  }, [])
 
   const signIn = useCallback(async () => {
+    const services = await loadFirebase()
     if (!services) return
+
     setError(null)
     try {
+      const { GoogleAuthProvider, signInWithPopup } = await import('firebase/auth')
       await signInWithPopup(services.auth, new GoogleAuthProvider())
     } catch {
       // Includes the operator closing the popup, which is not worth a
       // different message: the state they see is the state they are in.
       setError('sign-in-failed')
     }
-  }, [services])
+  }, [])
 
   const leave = useCallback(async () => {
+    const services = await loadFirebase()
     if (!services) return
+    const { signOut } = await import('firebase/auth')
     await signOut(services.auth)
-  }, [services])
+  }, [])
 
   const value = useMemo<AuthState>(
     () => ({ status, user, error, signIn, signOut: leave }),

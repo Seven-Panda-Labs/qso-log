@@ -107,5 +107,11 @@
   "status": {
     "offline": "Sin conexión",
     "online": "En línea"
+  },
+  "theme": {
+    "dark": "Oscuro",
+    "label": "Tema",
+    "light": "Claro",
+    "system": "Sistema"
   }
 }

@@ -5,12 +5,27 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#0f172a" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
     <meta name="description" content="A simple logbook for ham radio operators. Works offline, syncs when online." />
     <title>QSO Log</title>
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // Before the bundle loads, or the first paint is the wrong theme.
+      try {
+        var stored = localStorage.getItem('qso-log.theme')
+        var dark =
+          stored === 'dark' ||
+          ((!stored || stored === 'system') &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches)
+        document.documentElement.classList.toggle('dark', dark)
+        document.documentElement.style.colorScheme = dark ? 'dark' : 'light'
+      } catch (error) {
+        document.documentElement.style.colorScheme = 'light dark'
+      }
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -1,17 +1,43 @@
 @import 'tailwindcss';
 
-/* Dark by default: most operating happens at night or in bright sun where a
-   dark screen is easier to read. The light theme is a preference, not a base. */
+/* The theme is a class on <html>, set before React mounts, so switching does
+   not depend on the system preference alone. See src/theme/. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-brand-50: oklch(0.97 0.02 250);
   --color-brand-500: oklch(0.65 0.17 250);
   --color-brand-600: oklch(0.56 0.17 250);
+
+  /* Semantic tokens, light values. The dark block below redefines them, so a
+     component names what a colour is for and never which theme it is in. */
+  --color-surface: var(--color-white);
+  --color-panel: var(--color-slate-100);
+  --color-panel-strong: var(--color-slate-200);
+  --color-line: var(--color-slate-300);
+  --color-line-soft: var(--color-slate-200);
+  --color-fg: var(--color-slate-900);
+  --color-fg-soft: var(--color-slate-700);
+  --color-muted: var(--color-slate-500);
+  --color-warn: var(--color-amber-700);
+  --color-warn-surface: var(--color-amber-100);
+  --color-on-brand: var(--color-white);
 }
 
-html {
-  color-scheme: dark;
+.dark {
+  --color-surface: var(--color-slate-900);
+  --color-panel: var(--color-slate-800);
+  --color-panel-strong: var(--color-slate-700);
+  --color-line: var(--color-slate-700);
+  --color-line-soft: --alpha(var(--color-slate-800) / 60%);
+  --color-fg: var(--color-slate-100);
+  --color-fg-soft: var(--color-slate-300);
+  --color-muted: var(--color-slate-400);
+  --color-warn: var(--color-amber-300);
+  --color-warn-surface: --alpha(var(--color-amber-900) / 50%);
+  --color-on-brand: var(--color-white);
 }
 
 body {
-  @apply bg-slate-900 text-slate-100 antialiased;
+  @apply bg-surface text-fg antialiased;
 }

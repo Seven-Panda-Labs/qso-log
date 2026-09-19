@@ -73,7 +73,7 @@ export default function LogbookPage() {
         <button
           type="button"
           onClick={() => setAdding(true)}
-          className="rounded-md bg-brand-600 px-4 py-2 font-medium"
+          className="rounded-md bg-brand-600 text-on-brand px-4 py-2 font-medium"
         >
           {t('action.add')}
         </button>
@@ -88,11 +88,11 @@ export default function LogbookPage() {
       {qsos.length === 0 ? (
         <section className="py-10 text-center">
           <h2 className="text-xl font-semibold">{t('logbook.empty.title')}</h2>
-          <p className="mt-2 text-slate-400">{t('logbook.empty.body')}</p>
+          <p className="mt-2 text-muted">{t('logbook.empty.body')}</p>
           {unavailable ? (
-            <p className="mt-4 text-sm text-amber-300">{t('logbook.storageUnavailable')}</p>
+            <p className="mt-4 text-sm text-warn">{t('logbook.storageUnavailable')}</p>
           ) : status === 'guest' ? (
-            <p className="mt-4 text-sm text-slate-500">{t('auth.guestHint')}</p>
+            <p className="mt-4 text-sm text-muted">{t('auth.guestHint')}</p>
           ) : null}
         </section>
       ) : (
@@ -104,13 +104,13 @@ export default function LogbookPage() {
               onChange={(event) => setSearch(event.target.value)}
               placeholder={t('logbook.searchPlaceholder')}
               aria-label={t('logbook.search')}
-              className="min-w-48 flex-1 rounded-md border border-slate-700 bg-slate-800 px-3 py-2"
+              className="min-w-48 flex-1 rounded-md border border-line bg-panel px-3 py-2"
             />
             <select
               value={band}
               onChange={(event) => setBand(event.target.value)}
               aria-label={t('field.band')}
-              className="rounded-md border border-slate-700 bg-slate-800 px-3 py-2"
+              className="rounded-md border border-line bg-panel px-3 py-2"
             >
               <option value="">{t('logbook.allBands')}</option>
               {usedBands(qsos).map((value) => (
@@ -123,7 +123,7 @@ export default function LogbookPage() {
               value={mode}
               onChange={(event) => setMode(event.target.value)}
               aria-label={t('field.mode')}
-              className="rounded-md border border-slate-700 bg-slate-800 px-3 py-2"
+              className="rounded-md border border-line bg-panel px-3 py-2"
             >
               <option value="">{t('logbook.allModes')}</option>
               {usedModes(qsos).map((value) => (
@@ -134,11 +134,11 @@ export default function LogbookPage() {
             </select>
           </div>
 
-          <p className="text-sm text-slate-400">{t('logbook.count', { count: visible.length })}</p>
+          <p className="text-sm text-muted">{t('logbook.count', { count: visible.length })}</p>
 
           {visible.length === 0 ? (
             <div className="py-10 text-center">
-              <p className="text-slate-400">{t('logbook.noResults')}</p>
+              <p className="text-muted">{t('logbook.noResults')}</p>
               {filtering ? (
                 <button
                   type="button"

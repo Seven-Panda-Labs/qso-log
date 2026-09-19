@@ -18,3 +18,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - Logbook with search, band and mode filters, and sortable columns.
 - ADIF import and export.
 - Statistics: contacts, stations, days on air, and a breakdown by band and mode.
+- Light and dark themes, following the system by default.
+
+### Changed
+
+- Faster first load: the app no longer downloads the backend until you sign in.

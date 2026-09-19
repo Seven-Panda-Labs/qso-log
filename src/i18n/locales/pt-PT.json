@@ -107,5 +107,11 @@
   "status": {
     "offline": "Sem ligação",
     "online": "Online"
+  },
+  "theme": {
+    "dark": "Escuro",
+    "label": "Tema",
+    "light": "Claro",
+    "system": "Sistema"
   }
 }
