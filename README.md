@@ -82,6 +82,8 @@ The interface ships in English, Spanish, French, and Portuguese, and follows the
 
 [GNU Affero General Public License v3.0](LICENSE) (AGPL-3.0).
 
+DXCC entity data comes from the [Amateur Radio Country Files](https://www.country-files.com/) by Jim Reisert, AD1C, used under the MIT licence. The notice travels with the generated table.
+
 ## Contributing
 
 Issues and pull requests are welcome. Start with [`CONTRIBUTING.md`](CONTRIBUTING.md). AI agents: [`AGENTS.md`](AGENTS.md).

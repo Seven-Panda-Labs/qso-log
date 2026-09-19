@@ -1,4 +1,5 @@
 import { parseCallsign } from './callsign'
+import type { DxccLookup } from './dxcc'
 import type { Qso } from './qso'
 
 export interface LogStats {
@@ -22,11 +23,7 @@ function tally(values: string[]): { name: string; count: number }[] {
     .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name))
 }
 
-/**
- * Counting is deliberately plain. Countries worked is the number every logger
- * shows and it needs a DXCC prefix table, which is a data problem of its own;
- * it arrives when that table does, not as a guess from the callsign prefix.
- */
+/** Counting is deliberately plain. */
 export function logStats(qsos: Qso[]): LogStats {
   const dates = qsos.map((qso) => qso.qsoDate).filter(Boolean).sort()
   const stations = new Set(qsos.map((qso) => parseCallsign(qso.call).base || qso.call))
@@ -41,4 +38,32 @@ export function logStats(qsos: Qso[]): LogStats {
     lastDate: dates.at(-1),
     activeDays: new Set(dates).size,
   }
+}
+
+export interface EntityCount {
+  dxcc: number
+  name: string
+  count: number
+}
+
+/**
+ * Entities worked, the number operators call countries.
+ *
+ * Contacts whose callsign resolves to nothing are left out rather than bundled
+ * into an "unknown" bucket: a count of countries with an eleventh entry called
+ * unknown is not a count of countries.
+ */
+export function entitiesWorked(qsos: Qso[], lookup: DxccLookup): EntityCount[] {
+  const counts = new Map<number, EntityCount>()
+
+  for (const qso of qsos) {
+    const entity = lookup(qso.call)
+    if (!entity) continue
+
+    const existing = counts.get(entity.dxcc)
+    if (existing) existing.count += 1
+    else counts.set(entity.dxcc, { dxcc: entity.dxcc, name: entity.name, count: 1 })
+  }
+
+  return [...counts.values()].sort((a, b) => b.count - a.count || a.name.localeCompare(b.name))
 }

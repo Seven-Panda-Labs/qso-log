@@ -1,6 +1,7 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { logStats } from '../domain/stats'
+import { loadDxcc, type DxccLookup } from '../domain/dxcc'
+import { entitiesWorked, logStats } from '../domain/stats'
 import { useLog } from '../storage/useLog'
 
 function formatDate(adif: string | undefined): string {
@@ -40,6 +41,20 @@ export default function StatsPage() {
   const { qsos, loading } = useLog()
   const stats = useMemo(() => logStats(qsos), [qsos])
 
+  // The prefix table is a few hundred kilobytes and only this page needs it.
+  const [dxcc, setDxcc] = useState<DxccLookup>()
+  useEffect(() => {
+    let live = true
+    void loadDxcc().then((lookup) => {
+      if (live) setDxcc(() => lookup)
+    })
+    return () => {
+      live = false
+    }
+  }, [])
+
+  const entities = useMemo(() => (dxcc ? entitiesWorked(qsos, dxcc) : []), [qsos, dxcc])
+
   if (loading) return null
 
   return (
@@ -53,6 +68,7 @@ export default function StatsPage() {
           <div className="grid gap-3 sm:grid-cols-3">
             <Tile label={t('stats.total')} value={stats.total} />
             <Tile label={t('stats.stations')} value={stats.stations} />
+            <Tile label={t('stats.entities')} value={dxcc ? entities.length : '—'} />
             <Tile label={t('stats.activeDays')} value={stats.activeDays} />
             <Tile label={t('stats.firstDate')} value={formatDate(stats.firstDate)} />
             <Tile label={t('stats.lastDate')} value={formatDate(stats.lastDate)} />
@@ -62,6 +78,20 @@ export default function StatsPage() {
             <Breakdown title={t('stats.bands')} rows={stats.bands} />
             <Breakdown title={t('stats.modes')} rows={stats.modes} />
           </div>
+
+          {entities.length > 0 ? (
+            <section>
+              <h2 className="mb-2 font-medium">{t('stats.entitiesWorked')}</h2>
+              <ul className="grid gap-1 sm:grid-cols-2">
+                {entities.map((entity) => (
+                  <li key={entity.dxcc} className="flex justify-between gap-3 text-sm">
+                    <span>{entity.name}</span>
+                    <span className="tabular-nums text-muted">{entity.count}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
         </>
       )}
     </div>

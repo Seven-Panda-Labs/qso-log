@@ -48,13 +48,20 @@ export default defineConfig({
         // it. Precaching it would charge every guest, on mobile data in a
         // field, for a feature they may never open. It is cached the first
         // time it is fetched instead, so offline still works after sign-in.
-        globIgnores: ['**/firebase-*.js'],
+        // The prefix table is only read by the statistics page, and is cached
+        // the first time that page is opened.
+        globIgnores: ['**/firebase-*.js', '**/dxcc.generated-*.js'],
         navigateFallback: '/index.html',
         runtimeCaching: [
           {
             urlPattern: /\/assets\/firebase-.*\.js$/,
             handler: 'CacheFirst',
             options: { cacheName: 'firebase-sdk', expiration: { maxEntries: 8 } },
+          },
+          {
+            urlPattern: /\/assets\/dxcc\.generated-.*\.js$/,
+            handler: 'CacheFirst',
+            options: { cacheName: 'dxcc-table', expiration: { maxEntries: 4 } },
           },
         ],
       },
