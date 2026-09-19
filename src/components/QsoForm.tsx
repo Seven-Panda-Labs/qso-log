@@ -68,7 +68,7 @@ export default function QsoForm({
 
       <div className="grid gap-3 sm:grid-cols-2">
         <label className="block">
-          <span className="text-sm text-slate-400">{t('field.call')}</span>
+          <span className="text-sm text-muted">{t('field.call')}</span>
           <input
             value={draft.call}
             onChange={(event) => set({ call: event.target.value.toUpperCase() })}
@@ -76,17 +76,17 @@ export default function QsoForm({
             autoCorrect="off"
             spellCheck={false}
             autoFocus
-            className="mt-1 w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-lg tracking-wide"
+            className="mt-1 w-full rounded-md border border-line bg-panel px-3 py-2 text-lg tracking-wide"
           />
         </label>
 
         <label className="block">
-          <span className="text-sm text-slate-400">{t('field.mode')}</span>
+          <span className="text-sm text-muted">{t('field.mode')}</span>
           <input
             list="modes"
             value={draft.mode}
             onChange={(event) => set({ mode: event.target.value.toUpperCase() })}
-            className="mt-1 w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2"
+            className="mt-1 w-full rounded-md border border-line bg-panel px-3 py-2"
           />
           <datalist id="modes">
             {MODES.map((mode) => (
@@ -96,27 +96,27 @@ export default function QsoForm({
         </label>
 
         <label className="block">
-          <span className="text-sm text-slate-400">{t('field.date')}</span>
+          <span className="text-sm text-muted">{t('field.date')}</span>
           <input
             type="date"
             value={toInputDate(draft.qsoDate)}
             onChange={(event) => set({ qsoDate: fromInputDate(event.target.value) })}
-            className="mt-1 w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2"
+            className="mt-1 w-full rounded-md border border-line bg-panel px-3 py-2"
           />
         </label>
 
         <label className="block">
-          <span className="text-sm text-slate-400">{t('field.time')}</span>
+          <span className="text-sm text-muted">{t('field.time')}</span>
           <input
             type="time"
             value={toInputTime(draft.timeOn)}
             onChange={(event) => set({ timeOn: fromInputTime(event.target.value) })}
-            className="mt-1 w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2"
+            className="mt-1 w-full rounded-md border border-line bg-panel px-3 py-2"
           />
         </label>
 
         <label className="block">
-          <span className="text-sm text-slate-400">{t('field.freq')}</span>
+          <span className="text-sm text-muted">{t('field.freq')}</span>
           <input
             inputMode="decimal"
             value={freqText}
@@ -126,60 +126,60 @@ export default function QsoForm({
               const band = Number.isFinite(parsed) ? bandForFrequency(parsed) : undefined
               if (band) set({ band })
             }}
-            className="mt-1 w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2"
+            className="mt-1 w-full rounded-md border border-line bg-panel px-3 py-2"
           />
           {derivedBand ? (
-            <span className="mt-1 block text-xs text-slate-500">
+            <span className="mt-1 block text-xs text-muted">
               {t('form.bandFromFreq', { band: derivedBand })}
             </span>
           ) : null}
         </label>
 
         <label className="block">
-          <span className="text-sm text-slate-400">{t('field.band')}</span>
+          <span className="text-sm text-muted">{t('field.band')}</span>
           <input
             value={draft.band}
             onChange={(event) => set({ band: event.target.value })}
-            className="mt-1 w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2"
+            className="mt-1 w-full rounded-md border border-line bg-panel px-3 py-2"
           />
         </label>
 
         <label className="block">
-          <span className="text-sm text-slate-400">{t('field.rstSent')}</span>
+          <span className="text-sm text-muted">{t('field.rstSent')}</span>
           <input
             value={draft.rstSent ?? ''}
             onChange={(event) => set({ rstSent: event.target.value })}
-            className="mt-1 w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2"
+            className="mt-1 w-full rounded-md border border-line bg-panel px-3 py-2"
           />
         </label>
 
         <label className="block">
-          <span className="text-sm text-slate-400">{t('field.rstRcvd')}</span>
+          <span className="text-sm text-muted">{t('field.rstRcvd')}</span>
           <input
             value={draft.rstRcvd ?? ''}
             onChange={(event) => set({ rstRcvd: event.target.value })}
-            className="mt-1 w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2"
+            className="mt-1 w-full rounded-md border border-line bg-panel px-3 py-2"
           />
-          <span className="mt-1 block text-xs text-slate-500">
+          <span className="mt-1 block text-xs text-muted">
             {style === 'db' ? t('form.reportHintDb') : t('form.reportHintRst')}
           </span>
         </label>
 
         <label className="block">
-          <span className="text-sm text-slate-400">{t('field.gridsquare')}</span>
+          <span className="text-sm text-muted">{t('field.gridsquare')}</span>
           <input
             value={draft.gridsquare ?? ''}
             onChange={(event) => set({ gridsquare: event.target.value })}
-            className="mt-1 w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2"
+            className="mt-1 w-full rounded-md border border-line bg-panel px-3 py-2"
           />
         </label>
 
         <label className="block sm:col-span-2">
-          <span className="text-sm text-slate-400">{t('field.comment')}</span>
+          <span className="text-sm text-muted">{t('field.comment')}</span>
           <input
             value={draft.comment ?? ''}
             onChange={(event) => set({ comment: event.target.value })}
-            className="mt-1 w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2"
+            className="mt-1 w-full rounded-md border border-line bg-panel px-3 py-2"
           />
         </label>
       </div>
@@ -187,7 +187,7 @@ export default function QsoForm({
       {/* Warnings, not gates. Only a missing callsign or mode stops a save,
           because everything else may be exactly what the operator worked. */}
       {submitted && issues.length > 0 ? (
-        <ul className="space-y-1 text-sm text-amber-300">
+        <ul className="space-y-1 text-sm text-warn">
           {issues.map((issue) => (
             <li key={issue}>{t(`issue.${issue}`)}</li>
           ))}
@@ -195,7 +195,7 @@ export default function QsoForm({
       ) : null}
 
       <div className="flex gap-2">
-        <button type="submit" className="rounded-md bg-brand-600 px-4 py-2 font-medium">
+        <button type="submit" className="rounded-md bg-brand-600 text-on-brand px-4 py-2 font-medium">
           {t('action.save')}
         </button>
         <button type="button" onClick={onCancel} className="rounded-md px-4 py-2 underline">

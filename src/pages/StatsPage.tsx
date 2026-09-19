@@ -10,9 +10,9 @@ function formatDate(adif: string | undefined): string {
 
 function Tile({ label, value }: { label: string; value: string | number }) {
   return (
-    <div className="rounded-md border border-slate-800 px-4 py-3">
+    <div className="rounded-md border border-line px-4 py-3">
       <div className="text-2xl font-semibold tabular-nums">{value}</div>
-      <div className="text-sm text-slate-400">{label}</div>
+      <div className="text-sm text-muted">{label}</div>
     </div>
   )
 }
@@ -27,7 +27,7 @@ function Breakdown({ title, rows }: { title: string; rows: { name: string; count
           <li key={row.name} className="flex items-center gap-3 text-sm">
             <span className="w-16 shrink-0">{row.name}</span>
             <span className="h-2 rounded-full bg-brand-600" style={{ width: `${(row.count / most) * 60}%` }} />
-            <span className="tabular-nums text-slate-400">{row.count}</span>
+            <span className="tabular-nums text-muted">{row.count}</span>
           </li>
         ))}
       </ul>
@@ -47,7 +47,7 @@ export default function StatsPage() {
       <h1 className="text-xl font-semibold">{t('stats.title')}</h1>
 
       {stats.total === 0 ? (
-        <p className="text-slate-400">{t('stats.empty')}</p>
+        <p className="text-muted">{t('stats.empty')}</p>
       ) : (
         <>
           <div className="grid gap-3 sm:grid-cols-3">

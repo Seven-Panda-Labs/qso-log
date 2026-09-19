@@ -5,15 +5,15 @@ import type { Qso } from '../domain/qso'
 import type { LogStore } from './logStore'
 import { useLog, useLogStore } from './useLog'
 
-const { useAuth, firebase, createLocalLogStore, createFirestoreLogStore } = vi.hoisted(() => ({
+const { useAuth, loadFirebase, createLocalLogStore, createFirestoreLogStore } = vi.hoisted(() => ({
   useAuth: vi.fn(),
-  firebase: vi.fn(),
+  loadFirebase: vi.fn(),
   createLocalLogStore: vi.fn(),
   createFirestoreLogStore: vi.fn(),
 }))
 
 vi.mock('../auth/AuthProvider', () => ({ useAuth }))
-vi.mock('../config/firebase', () => ({ firebase }))
+vi.mock('../config/firebase', () => ({ loadFirebase }))
 vi.mock('./localLogStore', () => ({ createLocalLogStore }))
 vi.mock('./firestoreLogStore', () => ({ createFirestoreLogStore }))
 
@@ -57,13 +57,24 @@ describe('useLogStore', () => {
     expect(createFirestoreLogStore).not.toHaveBeenCalled()
   })
 
-  it('gives a signed-in operator their own cloud log', () => {
+  it('gives a signed-in operator their own cloud log', async () => {
     setAuth({ status: 'signed-in', user: { uid: 'w1aw' } as never })
-    firebase.mockReturnValue({ db: 'db', auth: {}, app: {} })
+    loadFirebase.mockResolvedValue({ db: 'db', auth: {}, app: {} })
     createFirestoreLogStore.mockReturnValue(stubStore())
 
     render(<Probe />)
-    expect(createFirestoreLogStore).toHaveBeenCalledWith('db', 'w1aw')
+    await waitFor(() => expect(createFirestoreLogStore).toHaveBeenCalledWith('db', 'w1aw'))
+    expect(createLocalLogStore).not.toHaveBeenCalled()
+  })
+
+  // Falling back to the local store here would file a signed-in operator's
+  // contacts in the guest log.
+  it('waits for the cloud store rather than using the local one', () => {
+    setAuth({ status: 'signed-in', user: { uid: 'w1aw' } as never })
+    loadFirebase.mockReturnValue(new Promise(() => {}))
+
+    render(<Probe />)
+    expect(screen.getByTestId('store')).toHaveTextContent('none')
     expect(createLocalLogStore).not.toHaveBeenCalled()
   })
 
@@ -78,13 +89,13 @@ describe('useLogStore', () => {
     expect(createFirestoreLogStore).not.toHaveBeenCalled()
   })
 
-  it('falls back to the local store when Firebase is not configured', () => {
+  it('has no store when Firebase is not configured for a signed-in operator', async () => {
     setAuth({ status: 'signed-in', user: { uid: 'w1aw' } as never })
-    firebase.mockReturnValue(undefined)
-    createLocalLogStore.mockReturnValue(stubStore())
+    loadFirebase.mockResolvedValue(undefined)
 
     render(<Probe />)
-    expect(createLocalLogStore).toHaveBeenCalled()
+    await waitFor(() => expect(loadFirebase).toHaveBeenCalled())
+    expect(createFirestoreLogStore).not.toHaveBeenCalled()
   })
 })
 

@@ -32,6 +32,7 @@ Firebase (Auth, Firestore, Hosting)
 | `src/components/` | Shared UI |
 | `src/hooks/` | Reusable React state, for example `useOnlineStatus` |
 | `src/auth/` | Sign-in state, guest and signed-in |
+| `src/theme/` | Light and dark, system preference and override |
 | `src/storage/` | The log store: local, cloud, and the migration between them |
 | `src/config/` | Firebase wiring, environment |
 | `src/i18n/` | i18next setup and locale files |
@@ -69,7 +70,20 @@ Three rules run through it:
 | **Vitest + Testing Library** | Shares the Vite config, so no second build pipeline |
 | **oxlint** | Fast enough to run on every commit without thinking about it |
 
-Firebase services are created by `createFirebase()` in `src/config/firebase.ts` and exposed lazily through `firebase()`. Importing the module connects to nothing, which keeps tests and non-Firebase code paths free of it.
+Firebase is loaded on demand. `src/config/firebase.ts` holds types and the configuration check and imports no SDK; `loadFirebase()` pulls in `createFirebase.ts` the first time something needs it. A guest therefore downloads no Firebase at all, and the SDK arrives when someone signs in.
+
+## Theme
+
+Light and dark, with system as the default and an explicit choice remembered in `localStorage`. Components name colours by role, `bg-panel`, `text-muted`, `border-line`, defined once as tokens in `src/styles/index.css` and redefined under `.dark`, so no component knows which theme it is in. A small script in `index.html` sets the class before the bundle loads, or the first paint is the wrong colour.
+
+## First load
+
+The Firebase SDK is the bulk of the code and only a signed-in operator needs it, so it is a named chunk, excluded from the precache, and cached at runtime the first time it is fetched. Statistics is a lazy route. What a guest downloads on the first visit is the app, not the backend it may never use.
+
+| Build | First load (raw) | Precache |
+|-------|------------------|----------|
+| Before | 970 KB | 1045 KB |
+| After | 356 KB | 448 KB |
 
 ## Layers
 

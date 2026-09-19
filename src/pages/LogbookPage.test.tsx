@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
 import { AuthProvider } from '../auth/AuthProvider'
+import { ThemeProvider } from '../theme/ThemeProvider'
 import LogbookPage from './LogbookPage'
 
 /**
@@ -23,11 +24,13 @@ let databaseName = 'test'
 
 function renderPage() {
   return render(
-    <AuthProvider>
-      <MemoryRouter>
-        <LogbookPage />
-      </MemoryRouter>
-    </AuthProvider>,
+    <ThemeProvider>
+      <AuthProvider>
+        <MemoryRouter>
+          <LogbookPage />
+        </MemoryRouter>
+      </AuthProvider>
+    </ThemeProvider>,
   )
 }
 

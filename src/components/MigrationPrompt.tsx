@@ -37,7 +37,7 @@ export default function MigrationPrompt({ cloud }: { cloud: LogStore | undefined
 
   if (done !== null) {
     return (
-      <p className="rounded-md bg-slate-800 px-4 py-3 text-sm">{t('migrate.done', { count: done })}</p>
+      <p className="rounded-md bg-panel px-4 py-3 text-sm">{t('migrate.done', { count: done })}</p>
     )
   }
 
@@ -54,12 +54,12 @@ export default function MigrationPrompt({ cloud }: { cloud: LogStore | undefined
   }
 
   return (
-    <section className="rounded-md border border-slate-700 bg-slate-800 px-4 py-3">
+    <section className="rounded-md border border-line bg-panel px-4 py-3">
       <h2 className="font-medium">{t('migrate.title')}</h2>
-      <p className="mt-1 text-sm text-slate-300">{t('migrate.body', { count: pending })}</p>
-      {failed ? <p className="mt-1 text-sm text-amber-300">{t('migrate.failed')}</p> : null}
+      <p className="mt-1 text-sm text-fg-soft">{t('migrate.body', { count: pending })}</p>
+      {failed ? <p className="mt-1 text-sm text-warn">{t('migrate.failed')}</p> : null}
       <div className="mt-3 flex gap-2">
-        <button type="button" onClick={() => void move()} className="rounded-md bg-brand-600 px-3 py-1.5 text-sm font-medium">
+        <button type="button" onClick={() => void move()} className="rounded-md bg-brand-600 text-on-brand px-3 py-1.5 text-sm font-medium">
           {t('migrate.confirm')}
         </button>
         <button type="button" onClick={() => setDismissed(true)} className="px-3 py-1.5 text-sm underline">

@@ -56,7 +56,7 @@ export default function AdifButtons({
       <button type="button" onClick={exportLog} disabled={qsos.length === 0} className="underline disabled:no-underline disabled:opacity-40">
         {t('adif.export')}
       </button>
-      {message ? <span className="text-slate-400">{message}</span> : null}
+      {message ? <span className="text-muted">{message}</span> : null}
     </div>
   )
 }

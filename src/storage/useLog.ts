@@ -1,29 +1,54 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useAuth } from '../auth/AuthProvider'
-import { firebase } from '../config/firebase'
+import { loadFirebase } from '../config/firebase'
 import type { Qso } from '../domain/qso'
-import { createFirestoreLogStore } from './firestoreLogStore'
 import { createLocalLogStore } from './localLogStore'
 import type { LogStore } from './logStore'
 
+interface CloudStore {
+  uid: string
+  store: LogStore
+}
+
 /**
  * The store for the current operator: local while a guest, Firestore once
- * signed in. Undefined only while auth is still deciding, so nothing writes to
+ * signed in. Undefined while either is still resolving, so nothing writes to
  * the local log a moment before a cloud log appears.
+ *
+ * The Firestore store is imported on demand, with the SDK, so the guest path
+ * carries none of it.
  */
 export function useLogStore(): LogStore | undefined {
   const { status, user } = useAuth()
+  const uid = user?.uid
+  const [cloud, setCloud] = useState<CloudStore | undefined>()
+
+  useEffect(() => {
+    if (status !== 'signed-in' || !uid) return
+
+    let live = true
+    void (async () => {
+      const services = await loadFirebase()
+      if (!services || !live) return
+
+      const { createFirestoreLogStore } = await import('./firestoreLogStore')
+      if (!live) return
+
+      setCloud({ uid, store: createFirestoreLogStore(services.db, uid) })
+    })()
+
+    return () => {
+      live = false
+    }
+  }, [status, uid])
 
   return useMemo(() => {
     if (status === 'loading') return undefined
-
-    if (status === 'signed-in' && user) {
-      const services = firebase()
-      if (services) return createFirestoreLogStore(services.db, user.uid)
-    }
-
+    // A signed-in operator waits for their own cloud store. Falling back to
+    // the local one here would file their contacts in the guest log.
+    if (status === 'signed-in') return cloud?.uid === uid ? cloud?.store : undefined
     return createLocalLogStore()
-  }, [status, user])
+  }, [status, uid, cloud])
 }
 
 export interface LogState {

@@ -1,7 +1,8 @@
 import { deleteApp } from 'firebase/app'
 import { doc, getDoc, terminate } from 'firebase/firestore'
 import { afterEach, describe, expect, it } from 'vitest'
-import { createFirebase, type FirebaseEnv, type FirebaseServices } from './firebase'
+import { createFirebase } from './createFirebase'
+import type { FirebaseEnv, FirebaseServices } from './firebaseTypes'
 
 const env: FirebaseEnv = {
   VITE_FIREBASE_API_KEY: 'demo-api-key',
