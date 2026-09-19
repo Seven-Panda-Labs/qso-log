@@ -97,6 +97,8 @@
     "activeDays": "Jours en ondes",
     "bands": "Bandes",
     "empty": "Rien à compter pour l'instant",
+    "entities": "Pays",
+    "entitiesWorked": "Pays contactés",
     "firstDate": "Premier contact",
     "lastDate": "Dernier contact",
     "modes": "Modes",

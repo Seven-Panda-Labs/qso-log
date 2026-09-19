@@ -64,3 +64,34 @@ describe('StatsPage', () => {
     expect(container).toBeEmptyDOMElement()
   })
 })
+
+describe('countries worked', () => {
+  it('counts entities once the prefix table has loaded', async () => {
+    useLog.mockReturnValue({
+      qsos: [
+        qso({ call: 'W1AW' }),
+        qso({ call: 'K1ABC' }),
+        qso({ call: 'CT1ABC' }),
+        qso({ call: 'GM0ABC' }),
+      ],
+      loading: false,
+      unavailable: false,
+    })
+
+    render(<StatsPage />)
+
+    // The table is loaded on demand, so the tile fills in a moment later.
+    expect(await screen.findByText('United States')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Countries worked' })).toBeInTheDocument()
+    expect(screen.getByText('Countries').previousSibling).toHaveTextContent('3')
+    expect(screen.getByText('Portugal')).toBeInTheDocument()
+    expect(screen.getByText('Scotland')).toBeInTheDocument()
+  })
+
+  it('shows a placeholder rather than a wrong number while the table loads', () => {
+    useLog.mockReturnValue({ qsos: [qso({ call: 'W1AW' })], loading: false, unavailable: false })
+
+    render(<StatsPage />)
+    expect(screen.getByText('Countries').previousSibling).toHaveTextContent('—')
+  })
+})

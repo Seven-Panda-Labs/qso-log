@@ -10,6 +10,7 @@ All documentation in this project is written in English, including the parts tha
 | [emulators.md](emulators.md) | Local development with the Firebase emulators | Written |
 | [self-hosting.md](self-hosting.md) | Running your own instance, step by step | Written |
 | [adif.md](adif.md) | ADIF import and export: supported fields and rules | Written |
+| [dxcc.md](dxcc.md) | The DXCC entity table: source, licence, and how a callsign is placed | Written |
 | [i18n.md](i18n.md) | Locales, translation workflow, ham radio terminology | Written |
 | [testing.md](testing.md) | The three test suites and what belongs in each | Written |
 
