@@ -21,6 +21,9 @@ firebase-debug.*.log
 
 # Test and coverage output
 coverage/
+playwright-report/
+test-results/
+blob-report/
 
 # Editors and OS
 .DS_Store

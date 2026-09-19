@@ -22,6 +22,12 @@ export default defineConfig({
     },
     // Emulator backed tests run separately: `npm run test:emulator`, config
     // in vitest.config.emulator.ts.
-    exclude: [...configDefaults.exclude, 'firestore.rules.test.ts', '**/*.emulator.test.ts'],
+    // e2e/ is Playwright, run by `npm run test:e2e` against a real browser.
+    exclude: [
+      ...configDefaults.exclude,
+      'firestore.rules.test.ts',
+      '**/*.emulator.test.ts',
+      'e2e/**',
+    ],
   },
 })

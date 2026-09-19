@@ -5,6 +5,10 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
   build: {
+    // The Firebase chunk is over the default 500 kB warning threshold on
+    // purpose: it is split out and loaded on demand, which is the thing the
+    // warning asks for.
+    chunkSizeWarningLimit: 700,
     rollupOptions: {
       output: {
         // Named, so the service worker can tell the Firebase SDK apart from

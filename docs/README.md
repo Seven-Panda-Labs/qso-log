@@ -11,6 +11,7 @@ All documentation in this project is written in English, including the parts tha
 | [self-hosting.md](self-hosting.md) | Running your own instance, step by step | Written |
 | [adif.md](adif.md) | ADIF import and export: supported fields and rules | Written |
 | [i18n.md](i18n.md) | Locales, translation workflow, ham radio terminology | Written |
+| [testing.md](testing.md) | The three test suites and what belongs in each | Written |
 
 Documents marked *Draft* record decisions as they are made. A draft that still contains open questions says so at the top.
 
