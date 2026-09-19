@@ -12,21 +12,7 @@ import type { FirebaseEnv, FirebaseServices } from './firebaseTypes'
 export const EMULATOR_HOST = '127.0.0.1'
 export const EMULATOR_PORTS = { firestore: 8080, auth: 9099 } as const
 
-export interface FirebaseOptions {
-  /**
-   * Off only in tests. The persistent cache starts IndexedDB work and multi
-   * tab coordination that touches browser globals; under jsdom that work can
-   * outlive the test environment and throw "self is not defined" into an
-   * unrelated test file.
-   */
-  persistence?: boolean
-}
-
-export function createFirebase(
-  env: FirebaseEnv,
-  name?: string,
-  { persistence = true }: FirebaseOptions = {},
-): FirebaseServices {
+export function createFirebase(env: FirebaseEnv, name?: string): FirebaseServices {
   const app = initializeApp(
     {
       apiKey: env.VITE_FIREBASE_API_KEY,
@@ -42,12 +28,9 @@ export function createFirebase(
   // Persistent cache, not the default in-memory one: the log has to survive a
   // reload with no connectivity. Multi-tab manager because a tab is not a
   // session, operators leave the log open in several.
-  const db = initializeFirestore(
-    app,
-    persistence
-      ? { localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }) }
-      : {},
-  )
+  const db = initializeFirestore(app, {
+    localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }),
+  })
   const auth = getAuth(app)
 
   if (env.VITE_USE_FIREBASE_EMULATORS === 'true') {
