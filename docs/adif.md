@@ -1,7 +1,5 @@
 # ADIF
 
-> **Draft.** The rules here are commitments; the field tables fill in as import and export are built.
-
 [ADIF](https://adif.org/) (Amateur Data Interchange Format) is how logs move between programs. It is the project's interchange contract: the exit door is always open.
 
 ## Rules
@@ -32,7 +30,14 @@ The MVP covers the fields an operator fills in for an ordinary contact:
 
 Imports are tested against exports from widely used logging software: header variations, non-ASCII comments, missing optional fields, `.adi` versus `.adx`.
 
+## Implementation
+
+[`src/domain/adif.ts`](../src/domain/adif.ts), no dependency. The format is small enough that a parser is shorter than the code to adapt a library, and unknown field preservation is the one behaviour that had to be exact.
+
+The one rule that catches naive parsers: **a field's declared length is the contract**, so a value may contain anything, including `<`. A parser that scans for the next `<` instead of counting characters corrupts exactly the records that needed care, such as a comment quoting a frequency split.
+
+Imported contacts get new ids. An ADIF file is another program's record of the same contacts, and reusing its ids would overwrite the operator's own entries.
+
 ## Open questions
 
-- Whether to support ADX (XML) in the MVP or only `.adi`
-- Which library to use, and whether it handles unknown field preservation, see the product brief
+- Whether to support ADX (XML), or only `.adi`

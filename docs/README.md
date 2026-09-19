@@ -5,11 +5,11 @@ All documentation in this project is written in English, including the parts tha
 | File | Contents | Status |
 |------|----------|--------|
 | [PRODUCT_BRIEF.md](PRODUCT_BRIEF.md) | Vision, audience, MVP scope, non-goals, roadmap | Written |
-| [architecture.md](architecture.md) | How the app is put together: data model, sync, offline, modules | Partial |
+| [architecture.md](architecture.md) | How the app is put together: data model, sync, offline, modules | Written |
 | [configuration.md](configuration.md) | Environment variables and infrastructure setup | Written |
 | [emulators.md](emulators.md) | Local development with the Firebase emulators | Written |
 | [self-hosting.md](self-hosting.md) | Running your own instance, step by step | Written |
-| [adif.md](adif.md) | ADIF import and export: supported fields and rules | Draft |
+| [adif.md](adif.md) | ADIF import and export: supported fields and rules | Written |
 | [i18n.md](i18n.md) | Locales, translation workflow, ham radio terminology | Written |
 
 Documents marked *Draft* record decisions as they are made. A draft that still contains open questions says so at the top.
