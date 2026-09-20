@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
+import { createDxccLookup, type DxccData } from './dxcc'
 import type { Qso } from './qso'
-import { logStats } from './stats'
+import { entitiesWorked, logStats } from './stats'
 
 function qso(overrides: Partial<Qso> = {}): Qso {
   return {
@@ -67,5 +68,48 @@ describe('logStats', () => {
   it('orders ties alphabetically so the display is stable', () => {
     const stats = logStats([qso({ band: '40m' }), qso({ band: '20m' })])
     expect(stats.bands.map((band) => band.name)).toEqual(['20m', '40m'])
+  })
+})
+
+describe('entitiesWorked', () => {
+  const data: DxccData = {
+    entities: {
+      223: ['England', 'G', 'EU'],
+      272: ['Portugal', 'CT', 'EU'],
+      291: ['United States', 'K', 'NA'],
+    },
+    prefixes: { G: 223, M: 223, CT: 272, K: 291, W: 291 },
+    exact: {},
+  }
+  const lookup = createDxccLookup(data)
+
+  it('counts nothing for an empty log', () => {
+    expect(entitiesWorked([], lookup)).toEqual([])
+  })
+
+  it('counts each entity once, with its contacts', () => {
+    const worked = entitiesWorked(
+      [qso({ call: 'W1AW' }), qso({ call: 'K1ABC' }), qso({ call: 'CT1ABC' })],
+      lookup,
+    )
+
+    expect(worked).toEqual([
+      { dxcc: 291, name: 'United States', count: 2 },
+      { dxcc: 272, name: 'Portugal', count: 1 },
+    ])
+  })
+
+  it('follows a portable prefix to where the station actually is', () => {
+    const worked = entitiesWorked([qso({ call: 'CT/W1AW' })], lookup)
+    expect(worked).toEqual([{ dxcc: 272, name: 'Portugal', count: 1 }])
+  })
+
+  /**
+   * A count of countries with an entry called unknown is not a count of
+   * countries, so unplaceable callsigns are left out.
+   */
+  it('leaves out a callsign it cannot place', () => {
+    const worked = entitiesWorked([qso({ call: 'W1AW' }), qso({ call: 'QQ9ZZZ' })], lookup)
+    expect(worked).toEqual([{ dxcc: 291, name: 'United States', count: 1 }])
   })
 })

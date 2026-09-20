@@ -52,6 +52,7 @@ Firebase (Auth, Firestore, Hosting)
 | `adif.ts` | ADIF parsing and serialising, see [adif.md](adif.md) |
 | `logQuery.ts` | Search, filter, sort |
 | `stats.ts` | Counting a log |
+| `dxcc.ts` | Placing a callsign in a DXCC entity, see [dxcc.md](dxcc.md) |
 
 Three rules run through it:
 

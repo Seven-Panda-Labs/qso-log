@@ -97,6 +97,8 @@
     "activeDays": "Days on air",
     "bands": "Bands",
     "empty": "Nothing to count yet",
+    "entities": "Countries",
+    "entitiesWorked": "Countries worked",
     "firstDate": "First contact",
     "lastDate": "Latest contact",
     "modes": "Modes",

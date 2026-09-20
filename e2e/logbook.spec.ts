@@ -90,3 +90,22 @@ test('counts the log on the statistics page', async ({ page }) => {
   await expect(page.getByText('Contacts')).toBeVisible()
   await expect(page.getByText('2', { exact: true }).first()).toBeVisible()
 })
+
+test('counts countries worked, without carrying the prefix table on first load', async ({
+  page,
+}) => {
+  const chunks: string[] = []
+  page.on('request', (request) => {
+    if (request.resourceType() === 'script') chunks.push(request.url())
+  })
+
+  await addContact(page, 'W1AW', { mode: 'SSB' })
+  await addContact(page, 'CT1ABC', { mode: 'SSB' })
+  expect(chunks.some((url) => url.includes('dxcc'))).toBe(false)
+
+  await page.getByRole('link', { name: 'Statistics' }).click()
+
+  await expect(page.getByRole('heading', { name: 'Countries worked' })).toBeVisible()
+  await expect(page.getByText('United States')).toBeVisible()
+  await expect(page.getByText('Portugal')).toBeVisible()
+})

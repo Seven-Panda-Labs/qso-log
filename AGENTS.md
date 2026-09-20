@@ -162,6 +162,7 @@ The pre-push hook covers every agent and human that shells out to `git`. Emergen
 | Local emulators | [docs/emulators.md](docs/emulators.md) |
 | Self-hosting | [docs/self-hosting.md](docs/self-hosting.md) |
 | ADIF handling | [docs/adif.md](docs/adif.md) |
+| DXCC entities | [docs/dxcc.md](docs/dxcc.md) |
 | Internationalization | [docs/i18n.md](docs/i18n.md) |
 | Testing | [docs/testing.md](docs/testing.md) |
 

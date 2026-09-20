@@ -97,6 +97,8 @@
     "activeDays": "Días en el aire",
     "bands": "Bandas",
     "empty": "Todavía no hay nada que contar",
+    "entities": "Países",
+    "entitiesWorked": "Países trabajados",
     "firstDate": "Primer contacto",
     "lastDate": "Último contacto",
     "modes": "Modos",
