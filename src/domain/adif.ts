@@ -32,6 +32,7 @@ const FIELD_TO_KEY = {
   RST_SENT: 'rstSent',
   RST_RCVD: 'rstRcvd',
   GRIDSQUARE: 'gridsquare',
+  DXCC: 'dxcc',
   COMMENT: 'comment',
 } as const
 
@@ -96,6 +97,12 @@ export function adifToQso(record: AdifRecord, id: string): Qso {
     if (key === 'freq') {
       const freq = Number(value)
       if (Number.isFinite(freq)) qso.freq = freq
+      else extra[field] = value
+    } else if (key === 'dxcc') {
+      const dxcc = Number(value)
+      // DXCC 0 means "not a DXCC entity", which is a claim, not a number to
+      // count. An unreadable value is kept as it was written.
+      if (Number.isInteger(dxcc) && dxcc > 0) qso.dxcc = dxcc
       else extra[field] = value
     } else if (key) {
       qso[key] = value

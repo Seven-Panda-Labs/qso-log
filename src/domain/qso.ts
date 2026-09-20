@@ -25,6 +25,13 @@ export interface Qso {
   rstSent?: string
   rstRcvd?: string
   gridsquare?: string
+  /**
+   * ADIF DXCC, the entity the operator or their software recorded. Present
+   * only when it was logged: this app never writes its own inference here,
+   * because a stored value is a claim about what happened and an inference is
+   * not.
+   */
+  dxcc?: number
   comment?: string
   extra?: Record<string, string>
 }

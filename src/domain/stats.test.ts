@@ -112,4 +112,23 @@ describe('entitiesWorked', () => {
     const worked = entitiesWorked([qso({ call: 'W1AW' }), qso({ call: 'QQ9ZZZ' })], lookup)
     expect(worked).toEqual([{ dxcc: 291, name: 'United States', count: 1 }])
   })
+
+  /**
+   * The operator was there and a prefix table was not. An imported log may
+   * carry an entity its own program knew about and ours cannot derive.
+   */
+  it('prefers an entity the log recorded over the callsign', () => {
+    const worked = entitiesWorked([qso({ call: 'W1AW', dxcc: 272 })], lookup)
+    expect(worked).toEqual([{ dxcc: 272, name: 'Portugal', count: 1 }])
+  })
+
+  it('places a callsign it could not otherwise, when the log recorded one', () => {
+    const worked = entitiesWorked([qso({ call: 'QQ9ZZZ', dxcc: 223 })], lookup)
+    expect(worked).toEqual([{ dxcc: 223, name: 'England', count: 1 }])
+  })
+
+  it('falls back to the callsign when the recorded entity is unknown here', () => {
+    const worked = entitiesWorked([qso({ call: 'W1AW', dxcc: 9999 })], lookup)
+    expect(worked).toEqual([{ dxcc: 291, name: 'United States', count: 1 }])
+  })
 })

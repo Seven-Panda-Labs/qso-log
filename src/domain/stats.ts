@@ -49,15 +49,19 @@ export interface EntityCount {
 /**
  * Entities worked, the number operators call countries.
  *
- * Contacts whose callsign resolves to nothing are left out rather than bundled
- * into an "unknown" bucket: a count of countries with an eleventh entry called
- * unknown is not a count of countries.
+ * A DXCC recorded in the log wins over anything inferred from the callsign.
+ * The operator was there; a prefix table was not, and an imported log may
+ * carry an entity its own program knew about and ours cannot derive.
+ *
+ * Contacts that resolve to nothing are left out rather than bundled into an
+ * "unknown" bucket: a count of countries with an eleventh entry called unknown
+ * is not a count of countries.
  */
 export function entitiesWorked(qsos: Qso[], lookup: DxccLookup): EntityCount[] {
   const counts = new Map<number, EntityCount>()
 
   for (const qso of qsos) {
-    const entity = lookup(qso.call)
+    const entity = qso.dxcc ? (lookup.entity(qso.dxcc) ?? lookup(qso.call)) : lookup(qso.call)
     if (!entity) continue
 
     const existing = counts.get(entity.dxcc)
