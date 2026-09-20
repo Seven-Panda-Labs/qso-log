@@ -42,6 +42,16 @@ describe('createDxccLookup', () => {
     expect(lookup('QQ9ZZZ')).toBeUndefined()
     expect(lookup('')).toBeUndefined()
   })
+
+  it('answers by entity number, for a log that recorded one', () => {
+    expect(lookup.entity(279)).toEqual({
+      dxcc: 279,
+      name: 'Scotland',
+      prefix: 'GM',
+      continent: 'EU',
+    })
+    expect(lookup.entity(9999)).toBeUndefined()
+  })
 })
 
 describe('locationPart', () => {

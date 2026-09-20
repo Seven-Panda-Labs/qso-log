@@ -19,6 +19,8 @@ export interface DxccEntity {
 
 export interface DxccLookup {
   (callsign: string): DxccEntity | undefined
+  /** The entity with this ADIF DXCC number, for a log that recorded one. */
+  entity: (dxcc: number) => DxccEntity | undefined
 }
 
 /**
@@ -48,7 +50,7 @@ export function createDxccLookup(data: DxccData): DxccLookup {
     return { dxcc, name, prefix, continent }
   }
 
-  return (callsign) => {
+  const lookup: DxccLookup = (callsign) => {
     const whole = callsign.trim().toUpperCase()
 
     // An explicit callsign wins over its own prefix: 9M4SDX is in the Spratly
@@ -68,6 +70,10 @@ export function createDxccLookup(data: DxccData): DxccLookup {
 
     return undefined
   }
+
+  lookup.entity = entityFor
+
+  return lookup
 }
 
 /**

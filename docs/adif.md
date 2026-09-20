@@ -24,6 +24,7 @@ The MVP covers the fields an operator fills in for an ordinary contact:
 | `RST_SENT` | Signal report sent |
 | `RST_RCVD` | Signal report received |
 | `GRIDSQUARE` | Maidenhead locator of the station worked |
+| `DXCC` | Entity number, when the log recorded one, see [dxcc.md](dxcc.md) |
 | `COMMENT` | Free text note |
 
 ## Compatibility targets

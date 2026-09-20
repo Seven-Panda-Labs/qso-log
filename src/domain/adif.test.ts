@@ -191,3 +191,41 @@ describe('round trip', () => {
     expect(adifToQso(record ?? {}, '1').comment).toBe('worked <split> on 14.195')
   })
 })
+
+describe('the DXCC field', () => {
+  it('reads an entity a log recorded', () => {
+    expect(adifToQso({ CALL: 'W1AW', DXCC: '291' }, '1').dxcc).toBe(291)
+  })
+
+  it('writes it back out', () => {
+    expect(qsoToAdif(qso({ dxcc: 291 }))).toMatchObject({ DXCC: '291' })
+  })
+
+  it('round trips', () => {
+    const contact = qso({ dxcc: 291 })
+    const [record] = parseAdif(serializeAdif([contact])).records
+    expect(adifToQso(record ?? {}, contact.id)).toEqual(contact)
+  })
+
+  /**
+   * ADIF uses DXCC 0 for "not a DXCC entity", which is a statement about the
+   * contact rather than a number to count. It is kept as written.
+   */
+  it('keeps a zero rather than counting it', () => {
+    const parsed = adifToQso({ CALL: 'W1AW', DXCC: '0' }, '1')
+    expect(parsed.dxcc).toBeUndefined()
+    expect(parsed.extra).toEqual({ DXCC: '0' })
+  })
+
+  it('keeps an unreadable value rather than dropping it', () => {
+    const parsed = adifToQso({ CALL: 'W1AW', DXCC: 'not a number' }, '1')
+    expect(parsed.dxcc).toBeUndefined()
+    expect(parsed.extra).toEqual({ DXCC: 'not a number' })
+  })
+
+  // Nothing is invented on the way out: an entity we merely inferred is not
+  // the operator's record of what happened.
+  it('writes no DXCC for a contact that never had one', () => {
+    expect(qsoToAdif(qso({ call: 'W1AW' }))).not.toHaveProperty('DXCC')
+  })
+})

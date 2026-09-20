@@ -16,7 +16,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - Log storage: on the device for guests, synced to the account once signed in.
 - Logging contacts: add, edit, and delete, with the band filled in from the frequency and the signal report matched to the mode.
 - Logbook with search, band and mode filters, and sortable columns.
-- ADIF import and export.
+- ADIF import and export, including the DXCC entity a log already recorded.
 - Statistics: contacts, stations, days on air, countries worked, and a breakdown by band and mode.
 - Light and dark themes, following the system by default.
 

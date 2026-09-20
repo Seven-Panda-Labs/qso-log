@@ -24,7 +24,15 @@ That downloads the current file, regenerates [`src/domain/dxcc.generated.ts`](..
 
 **WAE entities map to their DXCC parent.** The country file lists Sicily, African Italy, Shetland, Bear Island, European Turkey and the Vienna International Centre separately, for the WAE award, each carrying its DXCC parent's number. A contact with `IT9ABC` counts as Italy, which is what DXCC says it is.
 
+## What the log says wins
+
+A contact that carries an ADIF `DXCC` field is counted as that entity, whatever its callsign suggests. The operator was there and a prefix table was not, and a log imported from another program may record an entity this one cannot derive. The field is read on import, written back on export, and never invented: an entity we merely inferred is not the operator's record of what happened, so it is not written into their file.
+
+ADIF uses `DXCC 0` for a contact that is not a DXCC entity. That is a statement about the contact rather than a number to count, so it is preserved as written and left out of the total.
+
 ## How a callsign is placed
+
+When there is no recorded entity, the callsign is placed by:
 
 1. The whole callsign, if the file names it explicitly. This wins, because it exists to override the prefix.
 2. Otherwise the location part: a prefix wins over the base call, so `F/W1AW` is France. A call area digit or an activity suffix (`/4`, `/P`, `/MM`) says nothing about location, so `W1AW/4` stays in the United States.
